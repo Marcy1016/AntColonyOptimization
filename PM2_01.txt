@@ -1,0 +1,12 @@
+initial_pheromon
+100.0
+parameter_a
+50.0
+parameter_b
+1
+evapo_syori
+0.2
+evapo_haichi
+0.2
+evapo_wariate
+0.2
