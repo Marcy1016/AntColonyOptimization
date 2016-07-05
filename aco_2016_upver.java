@@ -16,6 +16,9 @@ public class aco_2016_upver {
     Double  initial_pheromon,parameter_a,parameter_b,
             evapo_syori,evapo_haichi,evapo_machine;
 
+    int[] TASK,LAYER,machine_size,speed;  //machine_sizeはDouble型だったがintに変更
+    int[][] task_size[][],task_volume[][],F_TASK[][];
+
     try{
       while((str == br.readLine()) != null){
         switch(str){
@@ -83,6 +86,7 @@ public class aco_2016_upver {
         }
       }
 
+    TASK[]
 
     }
   }
