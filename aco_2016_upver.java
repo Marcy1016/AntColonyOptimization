@@ -147,7 +147,7 @@ public class aco_2016_upver {
     double[][][] haichi_pheromon  = new double[JOB][U_UB];
     double[][][] machine_pheromon = new double[MACHINE][TASK_MAX][JOB];
 
-    //タスク総数の宣言・だいにゅう 
+    //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
       total_task += TASK[job_i];
@@ -183,6 +183,7 @@ public class aco_2016_upver {
           }
         }
       }
+
 
 
     }
