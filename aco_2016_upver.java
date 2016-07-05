@@ -30,8 +30,8 @@ public class aco_2016_upver {
             ANT       = Integer.parseInt(br.readLine());
             System.out.println(ANT);
             break;
-          case "K":
-            K         = Integer.parseInt(br.readLine());
+          case "LOOP":
+            LOOP         = Integer.parseInt(br.readLine());
             System.out.println(K);
             break;
           case "JOB":
@@ -51,7 +51,7 @@ public class aco_2016_upver {
             System.out.println(MACHINE);
             break;
           case "U_ub":
-            U_ub      = Integer.parseInt(br.readLine());
+            U_UB      = Integer.parseInt(br.readLine());
             System.out.println(U_ub);
             break;
         }
