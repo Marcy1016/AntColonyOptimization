@@ -11,7 +11,7 @@ public class aco_2016_upver {
     br2 = new BufferdReader(new FileReader(args[2]));
     
     String str;
-    int RUN,ANT,K,JOB,LAYER_MAX,TASK_MAX,MACHINE,U_ub;
+    int RUN,ANT,LOOP,JOB,LAYER_MAX,TASK_MAX,MACHINE,U_UB;
     
     Double  initial_pheromon,parameter_a,parameter_b,
             evapo_syori,evapo_haichi,evapo_machine;
@@ -86,7 +86,7 @@ public class aco_2016_upver {
         }
       }
 
-    TASK[]
+    
 
     }
   }
