@@ -12,82 +12,130 @@ public class aco_2016_upver {
     
     String str;
     int RUN,ANT,LOOP,JOB,LAYER_MAX,TASK_MAX,MACHINE,U_UB;
-    
-    Double  initial_pheromon,parameter_a,parameter_b,
-            evapo_syori,evapo_haichi,evapo_machine;
 
-    int[] TASK,LAYER,machine_size,speed;  //machine_sizeはDouble型だったがintに変更
-    int[][] task_size[][],task_volume[][],F_TASK[][];
+    int job_i,task_i,layer_i,machine_i;
+    
+    Double  INITIAL_PHEROMON,PARAMETER_A,PARAMETER_B,
+            EVAPO_SYORI,EVAPO_HAICHI,EVAPO_MACHINE;
+
+    //try文の内で使用するので、try文の外にて宣言 
+    int[] TASK,LAYER,MACHINE_SIZE,SPEED;  //machine_sizeはDouble型だったがintに変更
+    int[][] TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
 
     try{
       while((str == br.readLine()) != null){
         switch(str){
           case "RUN":
             RUN       = Integer.parseInt(br.readLine());
-            System.out.println(RUN);
             break;
           case "ANT":
             ANT       = Integer.parseInt(br.readLine());
-            System.out.println(ANT);
             break;
           case "LOOP":
-            LOOP         = Integer.parseInt(br.readLine());
-            System.out.println(LOOP);
+            LOOP      = Integer.parseInt(br.readLine());
             break;
           case "JOB":
             JOB       = Integer.parseInt(br.readLine());
-            System.out.println(JOB);
             break;
           case "LAYER_MAX":
             LAYER_MAX = Integer.parseInt(br.readLine());
-            System.out.println(LAYER_MAX);
             break;
           case "TASK_MAX":
             TASK_MAX  = Integer.parseInt(br.readLine());
-            System.out.println(TASK_MAX);
             break;
           case "MACHINE":
             MACHINE   = Integer.parseInt(br.readLine());
-            System.out.println(MACHINE);
             break;
           case "U_ub":
             U_UB      = Integer.parseInt(br.readLine());
-            System.out.println(U_ub);
             break;
         }
       }
 
       while((str _ br1.readLine()) != null){
         switch(str){
-          case "initial_pheromon":
-            initial_pheromon  = Double.parseDouble(br1.readLine());
-            System.out.println(initial_pheromon);
+          case "INITIAL_PHEROMON":
+            INITIAL_PHEROMON  = Double.parseDouble(br1.readLine());
             break;
-          case "parameter_a":
-            parameter_a       = Double.parseDouble(br1.readLine());
-            System.out.println(parameter_a);
+          case "PARAMETER_A":
+            PARAMETER_A       = Double.parseDouble(br1.readLine());
             break;
-          case "parameter_b":
-            parameter_b       = Double.parseDouble(br1.readLine());
-            System.out.println(parameter_b);
+          case "PARAMETER_B":
+            PARAMETER_B       = Double.parseDouble(br1.readLine());
             break;
-          case "evapo_syori":
-            evapo_syori       = Double.parseDouble(br1.readLine());
-            System.out.println(evapo_syori);
+          case "EVAPO_SYORI":
+            EVAPO_SYORI       = Double.parseDouble(br1.readLine());
             break;
-          case "evapo_haichi":
-            evapo_haichi      = Double.parseDouble(br1.readLine());
-            System.out.println(evapo_haichi);
+          case "EVAPO_HAICHI":
+            EVAPO_HAICHI      = Double.parseDouble(br1.readLine());
             break;
-          case "evapo_machine":
-            evapo_machine     = Double.parseDouble(br1.readLine());
-            System.out.println(evapo_machine);
+          case "EVAPO_MACHINE":
+            EVAPO_MACHINE     = Double.parseDouble(br1.readLine());
             break;
         }
       }
 
-    TASK[]  = 
+      TASK          = new int[JOB];
+      TASK_SIZE     = new int[TASK_MAX][JOB];
+      TASK_VOLUME   = new int[TASK_MAX][JOB];
+      LAYER         = new int[JOB];
+      F_TASK        = new int[LAYER_MAX+1][JOB];
+      MACHINE_SIZE  = new int[MACHINE];
+      SPEED         = new int[MACHINE];
 
+      while((str = br2.readLine()) != null){
+        case "TASK":
+          for(job_i=0;job_i<JOB;job_i++){
+            TASK[job_i] = Integer.parseInt(br2.readLine());
+          }
+          break;
+        case "TASK_SIZE":
+          for(job_i=0;job_i<JOB;job_i++){
+            for(task_i=0;task_i<TASK[job_i];task_i++){
+              TASK[job_i] = Integer.parseInt[job_i];
+            }
+          }
+          break;
+        case "TASK_VOLUME":
+          for(job_i=0;job_i<JOB;job_i++){
+            for(task_i=0;task_i<TASK[job_i];task_i++){
+              TASK_VOLUME[task_i][job_i] = Integer.parseInt(br2.readLine());
+            }
+          }
+          break;
+        case "LAYER":
+          for(job_i=0;job_i<JOB;job_i++){
+            LAYER[job_i] = Integer.parseInt(br2.readLine());
+          }
+          break;
+        case "F_TASK":
+          for(job_i=0;job_i<JOB;job_i++){
+            for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
+              F_TASK[layer_i][job_i] = Integer.parseInt(br2.readLine());
+            }
+          }
+          break;
+        case "MACHINE_SIZE":
+          for(machine_i=0;machine_i<MACHINE;machine_i++){
+            MACHINE_SIZE[machine_i] = Integer.parseInt(br2.readLine());
+          }
+          break;
+        case "SPEED":
+          for(machine_i=0;machine_i<MACHINE;machine_i++){
+            SPEED[machine_i] = Integer.parseInt(br2.readLine());
+          }
+          break;
+      }
     }
   }
+
+
+
+
+
+
+
+
+
+
 }
