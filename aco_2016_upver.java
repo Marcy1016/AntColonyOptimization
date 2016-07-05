@@ -147,6 +147,12 @@ public class aco_2016_upver {
     double[][][] haichi_pheromon  = new double[JOB][U_UB];
     double[][][] machine_pheromon = new double[MACHINE][TASK_MAX][JOB];
 
+    //タスク総数の宣言・だいにゅう 
+    int total_task = 0;
+    for(job_i=0;job_i<JOB;job_i++){
+      total_task += TASK[job_i];
+    }
+
     //試行回数のループ
     for(run_i=0;run_i<RUN;run_i++){
       //処理順ノードの初期化
