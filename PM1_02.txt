@@ -1,8 +1,6 @@
-RUN
-1
 ANT
 50
-LOOP
+K
 6000
 JOB
 5
@@ -12,5 +10,5 @@ TASK_MAX
 60
 MACHINE
 5
-U_UB
+U_ub
 140
