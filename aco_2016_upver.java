@@ -141,11 +141,24 @@ public class aco_2016_upver {
     String filename_ext = ".csv";
 
 
-    int run_i;
+    int run_i,syori_i,haichi_i;
+
+    double[][][] syori_pheromon   = new double[MACHINE][TASK_MAX][JOB];
+    double[][][] haichi_pheromon  = new double[JOB][U_UB];
     double[][][] machine_pheromon = new double[MACHINE][TASK_MAX][JOB];
 
     //試行回数のループ
     for(run_i=0;run_i<RUN;run_i++){
+      //処理順ノードの初期化
+      for(job_i=0;job_i<JOB;job_i++){
+        for(syori_i;syori_i<TASK[job_i];syori_i++){
+          for(task_i=0;task_i<TASK[job_i];task_i++){
+            syori_pheromon[task_i][syori_i][job_i] = INITIAL_PHEROMON;
+          }
+        }
+      }
+
+
       //Machine割り当てノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
         for(task_i=0;task_i<TASK;task_i){
@@ -159,10 +172,8 @@ public class aco_2016_upver {
         }
       }
 
-      
+
     }
-
-
 
 
   }
