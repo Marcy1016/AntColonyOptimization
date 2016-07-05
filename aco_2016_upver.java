@@ -32,7 +32,7 @@ public class aco_2016_upver {
             break;
           case "LOOP":
             LOOP         = Integer.parseInt(br.readLine());
-            System.out.println(K);
+            System.out.println(LOOP);
             break;
           case "JOB":
             JOB       = Integer.parseInt(br.readLine());
@@ -86,7 +86,7 @@ public class aco_2016_upver {
         }
       }
 
-    
+    TASK[]  = 
 
     }
   }
