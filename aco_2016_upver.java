@@ -134,20 +134,33 @@ public class aco_2016_upver {
       br2.close();
     }
 
+    //外部出力のファイル名、拡張子の宣言・設定
     String filename     = "result_upver("+args[0].replace(".txt", "_")
                                          +args[1].replace(".txt", "_")
                                          +args[2].replace(".txt", ")");
     String filename_ext = ".csv";
 
 
+    int run_i;
+    double[][][] machine_pheromon = new double[MACHINE][TASK_MAX][JOB];
 
+    //試行回数のループ
+    for(run_i=0;run_i<RUN;run_i++){
+      //Machine割り当てノードの初期化
+      for(job_i=0;job_i<JOB;job_i++){
+        for(task_i=0;task_i<TASK;task_i){
+          for(machine_i=0;machine_i<MACHINE;machine_i++){
+            if(TASK_SIZE[task_i][job_i] <= MACHINE_SIZE[machine_i]){
+              machine_pheromon[machine_i][task_i][job_i] = INITIAL_PHEROMON;
+            }else{
+              machine_pheromon[machine_i][task_i][job_i] = 0.0;
+            }
+          }
+        }
+      }
 
-
-
-
-
-
-
+      
+    }
 
 
 
