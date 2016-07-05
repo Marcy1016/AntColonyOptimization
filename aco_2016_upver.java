@@ -164,6 +164,12 @@ public class aco_2016_upver {
         }
       }
 
+      //配置順ノードの初期化
+      for(job_i=0;job_i<JOB;job_i++){
+        for(haichi_i=0;haichi_i<total_task;haichi_i++){
+          haichi_pheromon[job_i][haichi_i] = INITIAL_PHEROMON;
+        }
+      }
 
       //Machine割り当てノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
