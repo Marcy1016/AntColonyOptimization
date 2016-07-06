@@ -223,13 +223,17 @@ public class aco_2016_up{
 	result_task    = new int [RUN];
 	result_ant     = new int [RUN];
 	
-	task_size    =new int[TASK_MAX][JOB];
+	//task_size    =new int[TASK_MAX][JOB];
 	task_volume  =new int[TASK_MAX][JOB];
 	
 	LAYER        =new int[JOB];
 	F_TASK       =new int[LAYER_MAX+1][JOB];	
 	machine_size =new double[MACHINE];
 	speed        =new int[MACHINE];
+
+
+	//TASK_MAXの初期化
+	TASK_MAX = 0;
 
 	while ((str = br2.readLine()) != null)
 	{
@@ -243,13 +247,14 @@ public class aco_2016_up{
 				{
 					TASK[job] = Integer.parseInt(temp[job]);
 					System.out.println(TASK[job]);
+					TASK_MAX += TASK[job];/*これ大事*/
 				}
 				break;
 			case "task_size":
 				for (job=0;job<JOB;job++)
 				{
 					temp = br2.readLine().split(",",0);
-					TASK[job] = new int[temp.length];
+					task_size[job] = new int[temp.length];
 					for (task=0;task<TASK[job];task++)
 					{
 						task_size[task][job] = Integer.parseInt(temp[task]);
