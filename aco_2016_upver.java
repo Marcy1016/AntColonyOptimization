@@ -153,7 +153,9 @@ public class aco_2016_upver {
       total_task += TASK[job_i];
     }
 
-    //試行回数のループ
+
+
+    /*-*-*-*-試行回数のループ-*-*-*-*/
     for(run_i=0;run_i<RUN;run_i++){
       //処理順ノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
@@ -184,9 +186,18 @@ public class aco_2016_upver {
         }
       }
 
+      double best_min_time = LOOP;//ベスト戦略のための変数\
+      int loop_i;
+
+      PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
+      for(loop_i=0;loop_i<LOOP;loop_i++){
+
+        int hai
+      }
 
 
-    }
+
+    }//RUN END
 
 
   }
