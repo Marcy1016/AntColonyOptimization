@@ -11,7 +11,7 @@ public class aco_2016_upver {
     br2 = new BufferdReader(new FileReader(args[2]));
     
     String str;
-    int RUN,ANT,LOOP,JOB,LAYER_MAX,TASK_MAX,MACHINE,U_UB;
+    int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
 
     int job_i,task_i,layer_i,machine_i;
     
@@ -31,8 +31,8 @@ public class aco_2016_upver {
           case "ANT":
             ANT       = Integer.parseInt(br.readLine());
             break;
-          case "LOOP":
-            LOOP      = Integer.parseInt(br.readLine());
+          case "SEDAI":
+            SEDAI      = Integer.parseInt(br.readLine());
             break;
           case "JOB":
             JOB       = Integer.parseInt(br.readLine());
@@ -46,9 +46,11 @@ public class aco_2016_upver {
           case "MACHINE":
             MACHINE   = Integer.parseInt(br.readLine());
             break;
+            /*
           case "U_ub":
             U_UB      = Integer.parseInt(br.readLine());
             break;
+            */
         }
       }
 
@@ -76,30 +78,37 @@ public class aco_2016_upver {
       }
 
       TASK          = new int[JOB];
-      TASK_SIZE     = new int[TASK_MAX][JOB];
-      TASK_VOLUME   = new int[TASK_MAX][JOB];
+      TASK_SIZE     = new int[JOB][TASK_MAX];
+      TASK_VOLUME   = new int[JOB][TASK_MAX];
       LAYER         = new int[JOB];
-      F_TASK        = new int[LAYER_MAX+1][JOB];
+      F_TASK        = new int[JOB][LAYER_MAX+1];
       MACHINE_SIZE  = new int[MACHINE];
       SPEED         = new int[MACHINE];
 
       while((str = br2.readLine()) != null){
         case "TASK":
+        String[] temp = br2.readLine().split(",",0);
+        TASK = new int[temp.length];
+        JOB = temp.length;
           for(job_i=0;job_i<JOB;job_i++){
-            TASK[job_i] = Integer.parseInt(br2.readLine());
+            TASK[job_i] = Integer.parseInt(temp[job_i]);
+            TASK_MAX += TASK[job_i];
           }
           break;
         case "TASK_SIZE":
+        TASK_SIZE = new int[JOB][];
           for(job_i=0;job_i<JOB;job_i++){
+            temp = br2.readLine().split(",",0);
+            TASK_SIZE[job_i] = new int[temp.length];
             for(task_i=0;task_i<TASK[job_i];task_i++){
-              TASK[job_i] = Integer.parseInt[job_i];
+              TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);
             }
           }
           break;
         case "TASK_VOLUME":
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
-              TASK_VOLUME[task_i][job_i] = Integer.parseInt(br2.readLine());
+              TASK_VOLUME[job_i][task_i] = Integer.parseInt(br2.readLine());
             }
           }
           break;
@@ -111,7 +120,7 @@ public class aco_2016_upver {
         case "F_TASK":
           for(job_i=0;job_i<JOB;job_i++){
             for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
-              F_TASK[layer_i][job_i] = Integer.parseInt(br2.readLine());
+              F_TASK[job_i][layer_i] = Integer.parseInt(br2.readLine());
             }
           }
           break;
@@ -143,9 +152,9 @@ public class aco_2016_upver {
 
     int run_i,syori_i,haichi_i;
 
-    double[][][] syori_pheromon   = new double[MACHINE][TASK_MAX][JOB];
-    double[][][] haichi_pheromon  = new double[JOB][U_UB];
-    double[][][] machine_pheromon = new double[MACHINE][TASK_MAX][JOB];
+    double[][][] syori_pheromon   = new double[JOB][MACHINE][TASK_MAX];
+    double[][][] haichi_pheromon  = new double[JOB][TASK_MAX];
+    double[][][] machine_pheromon = new double[JOB][MACHINE][TASK_MAX];
 
     //タスク総数の宣言・代入 
     int total_task = 0;
@@ -186,11 +195,11 @@ public class aco_2016_upver {
         }
       }
 
-      double best_min_time = LOOP;//ベスト戦略のための変数\
-      int loop_i;
+      double best_min_time = SEDAI;//ベスト戦略のための変数\
+      
 
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
-      for(loop_i=0;loop_i<LOOP;loop_i++){
+      for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
 
         int hai
       }

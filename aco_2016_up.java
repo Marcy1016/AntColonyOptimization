@@ -3,7 +3,7 @@ import java.io.*;
 import java.awt.*;
 import java.util.regex.*;
 
-public class aco_2016_up//?t?F??????????????????{
+public class aco_2016_up{
 		// Grid
 	static int RUN;
 	static int run;
@@ -223,7 +223,6 @@ public class aco_2016_up//?t?F??????????????????{
 	result_task    = new int [RUN];
 	result_ant     = new int [RUN];
 	
-	TASK         =new int[JOB];
 	task_size    =new int[TASK_MAX][JOB];
 	task_volume  =new int[TASK_MAX][JOB];
 	
@@ -237,18 +236,23 @@ public class aco_2016_up//?t?F??????????????????{
 		switch (str)
 		{
 			case "TASK":
-				for (job=0;job<JOB;job++)
+				String[] temp = br2.readLine().split(",",0);
+				TASK = new int[temp.length];
+				JOB = temp.length;
+				for (job=0;job<temp.length;job++)
 				{
-					TASK[job] = Integer.parseInt(br2.readLine());
+					TASK[job] = Integer.parseInt(temp[job]);
 					System.out.println(TASK[job]);
 				}
 				break;
 			case "task_size":
 				for (job=0;job<JOB;job++)
 				{
+					temp = br2.readLine().split(",",0);
+					TASK[job] = new int[temp.length];
 					for (task=0;task<TASK[job];task++)
 					{
-						task_size[task][job] = Integer.parseInt(br2.readLine());
+						task_size[task][job] = Integer.parseInt(temp[task]);
 						System.out.println(task_size[task][job]);
 					}
 				}
@@ -347,15 +351,15 @@ public class aco_2016_up//?t?F??????????????????{
 			}
 		}//end
 		
-		double best_min_time = K;// 6/22追加 534行　ベスト戦略のための変数
+		double best_min_time = K; // 6.22
 
 	// file open
 	PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));	
 		for(k=0;k<=K;k++){
 		//Initialization of the selection matrix
 			
-			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29追加 配置ノードのために必要
-			//haichi_job_select[JOB][U_ub][ANT]の初期値代入
+			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29
+			//haichi_job_select[JOB][U_ub][ANT]
 			for(ant=0;ant<ANT;ant++){
 				for(job=0;job<JOB;job++){
 					for(haichi=0;haichi<U_ub;haichi++){
@@ -524,13 +528,14 @@ public class aco_2016_up//?t?F??????????????????{
 				}
 				disp_pheromon[ant]=parameter_a-parameter_b*latest_endtime[ant];
 				if(disp_pheromon[ant]<=1.0){
-				disp_pheromon[ant]=1.0;  // 6/22   508,509行 変更点0.0 => 1.0
+				disp_pheromon[ant]=1.0;  // 6/22
 				}//gantt charts is end
 			}//ant loop is finish
 			
 			
 
-			//6/22 エリート戦略 １番のアリにフェロモンを２倍撒かせる			double min_latest_endtime = latest_endtime[0];
+			//6/22
+			double min_latest_endtime = latest_endtime[0];
 			int min_ant = 0;
 			for(ant=1;ant<ANT;ant++){
 				if(min_latest_endtime > latest_endtime[ant]){
@@ -552,7 +557,7 @@ public class aco_2016_up//?t?F??????????????????{
 					for(task=0;task<TASK[job];task++){
 						for(ant=0;ant<ANT;ant++){	//from here start the evaporation of node accumulation pheromone
 							syori_pheromon[task][syori][job]
-								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]* ?̕??????ύX??????
+								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]
 						}//end the evaporation of node
 						for(ant=0;ant<ANT;ant++){//from here Pheromone spray to the node
 							if(task==select_task[syori][job][ant]){
