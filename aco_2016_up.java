@@ -3,8 +3,7 @@ import java.io.*;
 import java.awt.*;
 import java.util.regex.*;
 
-public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
-{
+public class aco_2016_up//?t?F??????????????????{
 		// Grid
 	static int RUN;
 	static int run;
@@ -348,15 +347,15 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 			}
 		}//end
 		
-		double best_min_time = K;// 6/22’Ç‰Á 534s@ƒxƒXƒgí—ª‚Ì‚½‚ß‚Ì•Ï”
+		double best_min_time = K;// 6/22è¿½åŠ  534è¡Œã€€ãƒ™ã‚¹ãƒˆæˆ¦ç•¥ã®ãŸã‚ã®å¤‰æ•°
 
 	// file open
 	PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));	
 		for(k=0;k<=K;k++){
 		//Initialization of the selection matrix
 			
-			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29’Ç‰Á@”z’uƒm[ƒh‚Ì‚½‚ß‚É•K—v
-			//haichi_job_select[JOB][U_ub][ANT]‚Ì‰Šú’l‘ã“ü
+			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29è¿½åŠ  é…ç½®ãƒãƒ¼ãƒ‰ã®ãŸã‚ã«å¿…è¦
+			//haichi_job_select[JOB][U_ub][ANT]ã®åˆæœŸå€¤ä»£å…¥
 			for(ant=0;ant<ANT;ant++){
 				for(job=0;job<JOB;job++){
 					for(haichi=0;haichi<U_ub;haichi++){
@@ -525,14 +524,13 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 				}
 				disp_pheromon[ant]=parameter_a-parameter_b*latest_endtime[ant];
 				if(disp_pheromon[ant]<=1.0){
-				disp_pheromon[ant]=1.0;  // 6/22   508,509s@•ÏX“_0.0 => 1.0
+				disp_pheromon[ant]=1.0;  // 6/22   508,509è¡Œ å¤‰æ›´ç‚¹0.0 => 1.0
 				}//gantt charts is end
 			}//ant loop is finish
 			
 			
 
-			//6/22 ƒGƒŠ[ƒgí—ª@1”Ô‚ÌƒAƒŠ‚ÉƒtƒFƒƒ‚ƒ“‚ğ2”{‚Ü‚©‚¹‚é
-			double min_latest_endtime = latest_endtime[0];
+			//6/22 ã‚¨ãƒªãƒ¼ãƒˆæˆ¦ç•¥ ï¼‘ç•ªã®ã‚¢ãƒªã«ãƒ•ã‚§ãƒ­ãƒ¢ãƒ³ã‚’ï¼’å€æ’’ã‹ã›ã‚‹			double min_latest_endtime = latest_endtime[0];
 			int min_ant = 0;
 			for(ant=1;ant<ANT;ant++){
 				if(min_latest_endtime > latest_endtime[ant]){
@@ -554,7 +552,7 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 					for(task=0;task<TASK[job];task++){
 						for(ant=0;ant<ANT;ant++){	//from here start the evaporation of node accumulation pheromone
 							syori_pheromon[task][syori][job]
-								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]* ‚Ì•”•ª‚ª•ÏX‚ ‚è‚Ìó‘Ô
+								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]* ?Ì•??????ÏX??????
 						}//end the evaporation of node
 						for(ant=0;ant<ANT;ant++){//from here Pheromone spray to the node
 							if(task==select_task[syori][job][ant]){
