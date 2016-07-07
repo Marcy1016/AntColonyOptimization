@@ -159,6 +159,8 @@ public class aco_2016_upver {
     double[][][] haichi_pheromon  = new double[JOB][TASK_MAX];
     double[][][] machine_pheromon = new double[JOB][MACHINE][TASK_MAX];
 
+    double syori_prob = new double[JOB][TASK_MAX][TASK_MAX];
+
     //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
@@ -232,10 +234,19 @@ public class aco_2016_upver {
           }
         }
 
+        double sum;
+
         for(ant_i=0;ant_i<ANT;ant_i++){
           for(job_i=0;job_i<JOB;job++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
 
+              sum = 0.0;
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                sum += syori_pheromon[job_i][syori_i][task_i] * syori_select[ant_i][job_i][syori_i][task_i];
+              }
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                sori
+              }
             }
           }
         }
