@@ -260,7 +260,7 @@ public class aco_2016_upver {
               double count = 0.0;
               for(task_i=0;<TASK[job_i];task_i){
                 count += syori_prob[job_i][syori_i][task_i];
-                if(count>r) break;
+                if(count>rand) break;
               }
               select_task[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
@@ -268,10 +268,9 @@ public class aco_2016_upver {
               for(task_j=syori_i;task_j<TASK[job_i];task_j){
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
               }
-
             }
           }
-        }
+        }//処理順決定終了
 
         int hai
       }
