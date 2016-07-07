@@ -97,6 +97,8 @@ public class aco_2016_upver {
             TASK[job_i] = Integer.parseInt(temp[job_i]);
             TASK_MAX += TASK[job_i];
           }
+          //確認用println
+          System.out.println("TASK_MAX = " + );
           break;
         case "TASK_SIZE":
           TASK_SIZE = new int[JOB][];
@@ -159,6 +161,7 @@ public class aco_2016_upver {
     double[][][] haichi_pheromon  = new double[JOB][TASK_MAX];
     double[][][] machine_pheromon = new double[JOB][MACHINE][TASK_MAX];
 
+    //どうしてdouble[JOB][TASK_MAX][TASK_MAX]なのだろう
     double syori_prob = new double[JOB][TASK_MAX][TASK_MAX];
 
     //タスク総数の宣言・代入 
@@ -212,6 +215,9 @@ public class aco_2016_upver {
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
+
+          int select_task = new int[ANT][JOB][TASK_MAX];         
+
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK;task_i++){
               for(task_j=0;task_j<TASK;task_j++){
@@ -234,19 +240,35 @@ public class aco_2016_upver {
           }
         }
 
-        double sum;
+        int task_list = new int [JOB][TASK_MAX];
 
+        //処理順の決定
         for(ant_i=0;ant_i<ANT;ant_i++){
           for(job_i=0;job_i<JOB;job++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
 
-              sum = 0.0;
+              double sum = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 sum += syori_pheromon[job_i][syori_i][task_i] * syori_select[ant_i][job_i][syori_i][task_i];
               }
               for(task_i=0;task_i<TASK[job_i];task_i++){
-                sori
+                syori_prob[job_i][syori_i][task_i] = syori_pheromon[job_i][syori_i][task_i]
+                                                   * syori_select[ant_i][job_i][syori_i][task_i] / sum;
               }
+
+              double rand = Math.random();
+              double count = 0.0;
+              for(task_i=0;<TASK[job_i];task_i){
+                count += syori_prob[job_i][syori_i][task_i];
+                if(count>r) break;
+              }
+              select_task[ant_i][job_i][syori_i]  = task_i;
+              task_list[job_i][syori_i]           = task_i;
+
+              for(task_j=syori_i;task_j<TASK[job_i];task_j){
+                syori_select[ant_i][job_i][task_i][task_j] = 0;
+              }
+
             }
           }
         }
