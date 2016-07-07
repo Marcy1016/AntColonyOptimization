@@ -26,25 +26,25 @@ public class aco_2016_upver {
       while((str == br.readLine()) != null){
         switch(str){
           case "RUN":
-            RUN       = Integer.parseInt(br.readLine());
+            RUN       = Integer.parseInt(br.readLine());//br1
             break;
           case "ANT":
-            ANT       = Integer.parseInt(br.readLine());
+            ANT       = Integer.parseInt(br.readLine());//br1
             break;
           case "SEDAI":
-            SEDAI      = Integer.parseInt(br.readLine());
+            SEDAI      = Integer.parseInt(br.readLine());//br1
             break;
           case "JOB":
-            JOB       = Integer.parseInt(br.readLine());
+            JOB       = Integer.parseInt(br.readLine());//削除
             break;
           case "LAYER_MAX":
-            LAYER_MAX = Integer.parseInt(br.readLine());
+            LAYER_MAX = Integer.parseInt(br.readLine());//
             break;
           case "TASK_MAX":
-            TASK_MAX  = Integer.parseInt(br.readLine());
+            TASK_MAX  = Integer.parseInt(br.readLine());//削除
             break;
           case "MACHINE":
-            MACHINE   = Integer.parseInt(br.readLine());
+            MACHINE   = Integer.parseInt(br.readLine());//br1 or br2
             break;
             /*
           case "U_ub":
@@ -77,7 +77,7 @@ public class aco_2016_upver {
         }
       }
 
-      TASK          = new int[JOB];
+      //TASK          = new int[JOB];
       TASK_SIZE     = new int[JOB][TASK_MAX];
       TASK_VOLUME   = new int[JOB][TASK_MAX];
       LAYER         = new int[JOB];
@@ -85,18 +85,21 @@ public class aco_2016_upver {
       MACHINE_SIZE  = new int[MACHINE];
       SPEED         = new int[MACHINE];
 
+      //初期化
+      TASK_MAX = 0;
+
       while((str = br2.readLine()) != null){
         case "TASK":
-        String[] temp = br2.readLine().split(",",0);
-        TASK = new int[temp.length];
-        JOB = temp.length;
+          String[] temp = br2.readLine().split(",",0);
+          TASK = new int[temp.length];
+          JOB = temp.length;
           for(job_i=0;job_i<JOB;job_i++){
             TASK[job_i] = Integer.parseInt(temp[job_i]);
             TASK_MAX += TASK[job_i];
           }
           break;
         case "TASK_SIZE":
-        TASK_SIZE = new int[JOB][];
+          TASK_SIZE = new int[JOB][];
           for(job_i=0;job_i<JOB;job_i++){
             temp = br2.readLine().split(",",0);
             TASK_SIZE[job_i] = new int[temp.length];
@@ -198,8 +201,44 @@ public class aco_2016_upver {
       double best_min_time = SEDAI;//ベスト戦略のための変数\
       
 
+      //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
       for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
+
+        int ant_i,task_j;
+        int syori_select = new int[ANT][JOB][TASK_MAX][TASK_MAX];
+
+        //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
+        for(ant_i=0;ant_i<ANT;ant_i++){
+          for(job_i=0;job_i<JOB;job_i++){
+            for(task_i=0;task_i<TASK;task_i++){
+              for(task_j=0;task_j<TASK;task_j++){
+                syori_select[ant_i][job_i][task_i][task_j] = 0;
+              }
+            }
+
+            //ここがわからん layerjobは必要なのか
+            int layerjob = LAYER[job_i];
+            F_TASK[0][job_i] = 0;
+            F_TASK[job_i][layerjob] = TASK[job_i];
+
+            for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
+              for(task_i=F_TASK[job_i][layer_i];task_i<F_TASK[job_i][layer_i+1];task_i++){
+                for(task_j=F_TASK[job_i][layer_i];task_j<F_TASK[job_i][layer_i+1];task_j++){
+                  syori_select[ant_i][job_i][task_i][task_j] = 1;
+                }
+              }
+            }
+          }
+        }
+
+        for(ant_i=0;ant_i<ANT;ant_i++){
+          for(job_i=0;job_i<JOB;job++){
+            for(syori_i=0;syori_i<TASK[job_i];syori_i++){
+
+            }
+          }
+        }
 
         int hai
       }
