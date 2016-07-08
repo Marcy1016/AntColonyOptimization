@@ -272,7 +272,19 @@ public class aco_2016_upver {
           }
         }//処理順決定終了
 
-        int hai
+        //配置決定
+        //↓の変数ってなんだっけ
+        int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
+
+        for(ant_i=0;ant_i<ANT;ant_i++){
+          for(job_i=0;job_i<JOB;job_i++){
+            for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
+              haichi_job_select[ant_i][job_i][haichi_i] = 1;
+            }
+          }
+        }
+        
+        
       }
 
 
