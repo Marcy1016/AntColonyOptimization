@@ -212,6 +212,7 @@ public class aco_2016_upver {
 
         int ant_i,task_j;
         int syori_select = new int[ANT][JOB][TASK_MAX][TASK_MAX];
+        
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
@@ -238,12 +239,24 @@ public class aco_2016_upver {
               }
             }
           }
+
+          //↓の変数ってなんだっけ
+          int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
+
+        
+          for(job_i=0;job_i<JOB;job_i++){
+            for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
+              haichi_job_select[ant_i][job_i][haichi_i] = 1;
+            }
+          }
         }
 
         int task_list = new int [JOB][TASK_MAX];
 
-        //処理順の決定
+        //処理、配置、マシーンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
+
+          //処理順の決定
           for(job_i=0;job_i<JOB;job++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
 
@@ -269,20 +282,12 @@ public class aco_2016_upver {
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
               }
             }
-          }
-        }//処理順決定終了
+          }//処理順決定終了
 
-        //配置決定
-        //↓の変数ってなんだっけ
-        int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
+          //配置決定
+          
 
-        for(ant_i=0;ant_i<ANT;ant_i++){
-          for(job_i=0;job_i<JOB;job_i++){
-            for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
-              haichi_job_select[ant_i][job_i][haichi_i] = 1;
-            }
-          }
-        }
+        }//処理、配置、マシーンの決定終了
         
         
       }
