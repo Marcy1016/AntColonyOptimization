@@ -162,7 +162,9 @@ public class aco_2016_upver {
     double[][][] machine_pheromon = new double[JOB][MACHINE][TASK_MAX];
 
     //どうしてdouble[JOB][TASK_MAX][TASK_MAX]なのだろう
-    double syori_prob = new double[JOB][TASK_MAX][TASK_MAX];
+    double syori_prob   = new double[JOB][TASK_MAX][TASK_MAX];
+    double haichi_prob  = new double[JOB][TASK_MAX];
+    double machine_prob = new double[JOB][MACHINE][TASK_MAX];
 
     //タスク総数の宣言・代入 
     int total_task = 0;
@@ -227,8 +229,8 @@ public class aco_2016_upver {
             }
 
             //ここがわからん layerjobは必要なのか
-            int layerjob = LAYER[job_i];
-            F_TASK[0][job_i] = 0;
+            int layerjob            = LAYER[job_i];
+            F_TASK[0][job_i]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
             for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
@@ -243,7 +245,7 @@ public class aco_2016_upver {
           //↓の変数ってなんだっけ
           int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
 
-        
+          //ここはjobループを上のものと統合してしまってもいいかもしれない
           for(job_i=0;job_i<JOB;job_i++){
             for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
               haichi_job_select[ant_i][job_i][haichi_i] = 1;
@@ -269,8 +271,8 @@ public class aco_2016_upver {
                                                    * syori_select[ant_i][job_i][syori_i][task_i] / sum;
               }
 
-              double rand = Math.random();
-              double count = 0.0;
+              double rand   = Math.random();
+              double count  = 0.0;
               for(task_i=0;<TASK[job_i];task_i){
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
@@ -285,9 +287,33 @@ public class aco_2016_upver {
           }//処理順決定終了
 
           //配置決定
-          
+          int haichi_select = new int[ANT][JOB];
+          int haichi_num_task = new int[JOB];
 
-        }//処理、配置、マシーンの決定終了
+          for(job_i=0;job_i<JOB;job_i++){
+            haichi_select[ant_i][job_i] = 1;
+            haichi_num_task = 0;
+          }
+          //haichiループからjobループに変更したがここはなんかやばい。怪しい。
+          for(job_i=0;job_i<JOB;job_i++){
+            
+            double sum = 0.0;
+            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+              sum += haichi_pheromon[job_i][haichi_i] * haichi_select[ant_i][job_i];
+            }
+            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+              haichi_prob[job_i][haichi_i] = haichi_pheromon[job_i][haichi_i] * haichi_select[ant_i][job_i] / sum;
+            }
+
+            double rand = Math.random();
+            double count = 0.0;
+            //ここのjobループはひとつ上のhaichiと統合してしまっていいのではないか => ダメっぽい
+            //しかし元のコードだとわざわざjob jobi とループの変数を分けている => 下でbreakるから
+            for()
+
+          }
+        
+        }//処理、配置、マシーンの決定終了(antループ)
         
         
       }

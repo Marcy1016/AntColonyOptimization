@@ -3,6 +3,8 @@ ReadMe.info
 									注意点
 -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 //Gitにすべて上げる事にした
+https://github.com/Marcy1016/AntColonyOptimization
+
 //SublimeTextにてソースコードを記述
 //PM1,PM2,PM3など必要なファイルはテンプレートから作ること
 //2015年以前の上記ファイルは使えない
