@@ -213,13 +213,14 @@ public class aco_2016_upver {
       for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
 
         int ant_i,task_j;
-        int syori_select = new int[ANT][JOB][TASK_MAX][TASK_MAX];
-        
+        int syori_select    = new int[ANT][JOB][TASK_MAX][TASK_MAX];
+        int haichi_select   = new int[ANT][JOB];
+        int machine_select  = new int[ANT][JOB][TASK_MAX];
+        int task_select     = new int[ANT][JOB][TASK_MAX];
+
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
-
-          int select_task = new int[ANT][JOB][TASK_MAX];         
 
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK;task_i++){
@@ -230,7 +231,7 @@ public class aco_2016_upver {
 
             //ここがわからん layerjobは必要なのか
             int layerjob            = LAYER[job_i];
-            F_TASK[0][job_i]        = 0;
+            F_TASK[job_i][0]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
             for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
@@ -309,7 +310,36 @@ public class aco_2016_upver {
             double count = 0.0;
             //ここのjobループはひとつ上のhaichiと統合してしまっていいのではないか => ダメっぽい
             //しかし元のコードだとわざわざjob jobi とループの変数を分けている => 下でbreakるから
-            for()
+            for(){
+
+
+            }
+
+            //マシーン割当
+            for(job_i=0;job_i<JOB;job_i++){
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                double sum = 0.0;
+                for(machine_i=0;machine_i<MACHINE;machine_i++){
+                  sum += machine_pheromon[job_i][task_i][machine_i];
+                }
+                for(machine_i=0;machine_i<MACHINE;machine_i++){
+                  machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][task_i][machine_i] / sum;
+                }
+
+                double rand = Math.random();
+                double count = 0.0;
+                int machine_j;
+                for(machine_j=0;machine_j<MACHINE;machine_j++){
+                  count += machine_prob[job_i][task_i][machine_j];
+                  if(count>r)break;
+                }
+                machine_select[task][job][ant]=machine_j;
+              }
+            }
+
+            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+              
+            }
 
           }
         
