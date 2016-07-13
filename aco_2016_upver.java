@@ -294,15 +294,15 @@ public class aco_2016_upver {
             haichi_select[ant_i][job_i] = 1;
             haichi_num_task = 0;
           }
-          //haichiループからjobループに変更したがここはなんかやばい。怪しい。
-          //外ループが配置、中ループがジョブ　要訂正
-          for(job_i=0;job_i<JOB;job_i++){
+
+          
+          for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             
             double sum = 0.0;
-            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+            for(job_i=0;job_i<JOB;job_i++){
               sum += haichi_pheromon[job_i][haichi_i] * haichi_select[ant_i][job_i];
             }
-            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+            for(job_i=0;job_i<JOB;job_i++){
               haichi_prob[job_i][haichi_i] = haichi_pheromon[job_i][haichi_i] * haichi_select[ant_i][job_i] / sum;
             }
 
