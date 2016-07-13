@@ -221,7 +221,7 @@ public class aco_2016_upver {
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
-
+          //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK;task_i++){
               for(task_j=0;task_j<TASK;task_j++){
@@ -229,7 +229,7 @@ public class aco_2016_upver {
               }
             }
 
-            //ここがわからん layerjobは必要なのか
+            //layerjobは一時的変数
             int layerjob            = LAYER[job_i];
             F_TASK[job_i][0]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
@@ -246,7 +246,6 @@ public class aco_2016_upver {
           //↓の変数ってなんだっけ
           int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
 
-          //ここはjobループを上のものと統合してしまってもいいかもしれない
           for(job_i=0;job_i<JOB;job_i++){
             for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
               haichi_job_select[ant_i][job_i][haichi_i] = 1;
@@ -296,6 +295,7 @@ public class aco_2016_upver {
             haichi_num_task = 0;
           }
           //haichiループからjobループに変更したがここはなんかやばい。怪しい。
+          //外ループが配置、中ループがジョブ　要訂正
           for(job_i=0;job_i<JOB;job_i++){
             
             double sum = 0.0;
