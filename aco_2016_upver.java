@@ -5,7 +5,7 @@ import java.io.*;
 public class aco_2016_upver {
   public static void main(String args[]) throws IOException{
   
-  // ファイル読み込みのための宣言、代入
+    // ファイル読み込みのための宣言、代入
     br = new BufferdReader(new FileReader(args[0]));
     br1 = new BufferdReader(new FileReader(args[1]));
     br2 = new BufferdReader(new FileReader(args[2]));
@@ -19,8 +19,8 @@ public class aco_2016_upver {
             EVAPO_SYORI,EVAPO_HAICHI,EVAPO_MACHINE;
 
     //try文の内で使用するので、try文の外にて宣言 
-    int[] TASK,LAYER,MACHINE_SIZE,SPEED;  //machine_sizeはDouble型だったがintに変更
-    int[][] TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
+    int TASK[],LAYER[],MACHINE_SIZE[],SPEED[];  //machine_sizeはDouble型だったがintに変更
+    int TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
 
     try{
       while((str == br.readLine()) != null){
@@ -89,56 +89,58 @@ public class aco_2016_upver {
       TASK_MAX = 0;
 
       while((str = br2.readLine()) != null){
-        case "TASK":
-          String[] temp = br2.readLine().split(",",0);
-          TASK = new int[temp.length];
-          JOB = temp.length;
-          for(job_i=0;job_i<JOB;job_i++){
-            TASK[job_i] = Integer.parseInt(temp[job_i]);
-            TASK_MAX += TASK[job_i];
-          }
-          //確認用println
-          System.out.println("TASK_MAX = " + );
-          break;
-        case "TASK_SIZE":
-          TASK_SIZE = new int[JOB][];
-          for(job_i=0;job_i<JOB;job_i++){
-            temp = br2.readLine().split(",",0);
-            TASK_SIZE[job_i] = new int[temp.length];
-            for(task_i=0;task_i<TASK[job_i];task_i++){
-              TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);
+        switch(str){
+          case "TASK":
+            String[] temp = br2.readLine().split(",",0);
+            TASK = new int[temp.length];
+            JOB = temp.length;
+            for(job_i=0;job_i<JOB;job_i++){
+              TASK[job_i] = Integer.parseInt(temp[job_i]);
+              TASK_MAX += TASK[job_i];
             }
-          }
-          break;
-        case "TASK_VOLUME":
-          for(job_i=0;job_i<JOB;job_i++){
-            for(task_i=0;task_i<TASK[job_i];task_i++){
-              TASK_VOLUME[job_i][task_i] = Integer.parseInt(br2.readLine());
+            //確認用println
+            System.out.println("TASK_MAX = " + );
+            break;
+          case "TASK_SIZE":
+            TASK_SIZE = new int[JOB][];
+            for(job_i=0;job_i<JOB;job_i++){
+              temp = br2.readLine().split(",",0);
+              TASK_SIZE[job_i] = new int[temp.length];
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);
+              }
             }
-          }
-          break;
-        case "LAYER":
-          for(job_i=0;job_i<JOB;job_i++){
-            LAYER[job_i] = Integer.parseInt(br2.readLine());
-          }
-          break;
-        case "F_TASK":
-          for(job_i=0;job_i<JOB;job_i++){
-            for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
-              F_TASK[job_i][layer_i] = Integer.parseInt(br2.readLine());
+            break;
+          case "TASK_VOLUME":
+            for(job_i=0;job_i<JOB;job_i++){
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                TASK_VOLUME[job_i][task_i] = Integer.parseInt(br2.readLine());
+              }
             }
-          }
-          break;
-        case "MACHINE_SIZE":
-          for(machine_i=0;machine_i<MACHINE;machine_i++){
-            MACHINE_SIZE[machine_i] = Integer.parseInt(br2.readLine());
-          }
-          break;
-        case "SPEED":
-          for(machine_i=0;machine_i<MACHINE;machine_i++){
-            SPEED[machine_i] = Integer.parseInt(br2.readLine());
-          }
-          break;
+            break;
+          case "LAYER":
+            for(job_i=0;job_i<JOB;job_i++){
+              LAYER[job_i] = Integer.parseInt(br2.readLine());
+            }
+            break;
+          case "F_TASK":
+            for(job_i=0;job_i<JOB;job_i++){
+              for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
+                F_TASK[job_i][layer_i] = Integer.parseInt(br2.readLine());
+              }
+            }
+            break;
+          case "MACHINE_SIZE":
+            for(machine_i=0;machine_i<MACHINE;machine_i++){
+              MACHINE_SIZE[machine_i] = Integer.parseInt(br2.readLine());
+            }
+            break;
+          case "SPEED":
+            for(machine_i=0;machine_i<MACHINE;machine_i++){
+              SPEED[machine_i] = Integer.parseInt(br2.readLine());
+            }
+            break;
+        }
       }
     }
 
@@ -157,9 +159,9 @@ public class aco_2016_upver {
 
     int run_i,syori_i,haichi_i;
 
-    double[][][] syori_pheromon   = new double[JOB][MACHINE][TASK_MAX];
-    double[][][] haichi_pheromon  = new double[JOB][TASK_MAX];
-    double[][][] machine_pheromon = new double[JOB][MACHINE][TASK_MAX];
+    double syori_pheromon[][][]   = new double[JOB][MACHINE][TASK_MAX];
+    double haichi_pheromon[][][]  = new double[JOB][TASK_MAX];
+    double machine_pheromon[][][] = new double[JOB][MACHINE][TASK_MAX];
 
     //どうしてdouble[JOB][TASK_MAX][TASK_MAX]なのだろう
     double syori_prob   = new double[JOB][TASK_MAX][TASK_MAX];
@@ -205,7 +207,7 @@ public class aco_2016_upver {
         }
       }
 
-      double best_min_time = SEDAI;//ベスト戦略のための変数\
+      double best_min_time = SEDAI;//ベスト戦略のための変数
       
 
       //外部出力ファイルオープン
@@ -213,10 +215,16 @@ public class aco_2016_upver {
       for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
 
         int ant_i,task_j;
-        int syori_select    = new int[ANT][JOB][TASK_MAX][TASK_MAX];
-        int haichi_select   = new int[ANT][JOB];
-        int machine_select  = new int[ANT][JOB][TASK_MAX];
-        int task_select     = new int[ANT][JOB][TASK_MAX];
+        int syori_select[][][][]   = new int[ANT][JOB][TASK_MAX][TASK_MAX];
+        int haichi_select[][]      = new int[ANT][JOB];
+        int machine_select[][][]   = new int[ANT][JOB][TASK_MAX];
+        int job_select[][]         = new int[ANT][TASK_MAX];
+        int task_select[][][]      = new int[ANT][JOB][TASK_MAX];
+
+        int[] haichi_num_task = new int[JOB];
+        int[][] haichi_job    = new;
+        int[][] haichi_task   = new;
+
 
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
@@ -234,6 +242,7 @@ public class aco_2016_upver {
             F_TASK[job_i][0]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
+            //制約条件の定義？()
             for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
               for(task_i=F_TASK[job_i][layer_i];task_i<F_TASK[job_i][layer_i+1];task_i++){
                 for(task_j=F_TASK[job_i][layer_i];task_j<F_TASK[job_i][layer_i+1];task_j++){
@@ -287,15 +296,11 @@ public class aco_2016_upver {
           }//処理順決定終了
 
           //配置決定
-          int haichi_select = new int[ANT][JOB];
-          int haichi_num_task = new int[JOB];
 
           for(job_i=0;job_i<JOB;job_i++){
             haichi_select[ant_i][job_i] = 1;
             haichi_num_task = 0;
           }
-
-          
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             
             double sum = 0.0;
@@ -308,45 +313,47 @@ public class aco_2016_upver {
 
             double rand = Math.random();
             double count = 0.0;
-            //ここのjobループはひとつ上のhaichiと統合してしまっていいのではないか => ダメっぽい
-            //しかし元のコードだとわざわざjob jobi とループの変数を分けている => 下でbreakるから
-            for(){
-
-
+            for(job_i=0;job_i<JOB;job_i){
+              count += haichi_prob[job_i][haichi_i];
+              if(count>rand)break;//ここでjob_iのループを強制的に終了させ、そのjob_iを下で使う 
             }
 
-            //マシーン割当
-            for(job_i=0;job_i<JOB;job_i++){
-              for(task_i=0;task_i<TASK[job_i];task_i++){
-                double sum = 0.0;
-                for(machine_i=0;machine_i<MACHINE;machine_i++){
-                  sum += machine_pheromon[job_i][task_i][machine_i];
-                }
-                for(machine_i=0;machine_i<MACHINE;machine_i++){
-                  machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][task_i][machine_i] / sum;
-                }
+            job_select[ant_i][haichi_i] = job_i;
 
-                double rand = Math.random();
-                double count = 0.0;
-                int machine_j;
-                for(machine_j=0;machine_j<MACHINE;machine_j++){
-                  count += machine_prob[job_i][task_i][machine_j];
-                  if(count>r)break;
-                }
-                machine_select[task][job][ant]=machine_j;
-              }
-            }
-
-            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
-              
-            }
 
           }
-        
+
+
+            //マシーン割当
+          for(job_i=0;job_i<JOB;job_i++){
+            for(task_i=0;task_i<TASK[job_i];task_i++){
+              double sum = 0.0;
+             for(machine_i=0;machine_i<MACHINE;machine_i++){
+                sum += machine_pheromon[job_i][task_i][machine_i];
+              }
+              for(machine_i=0;machine_i<MACHINE;machine_i++){
+                machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][task_i][machine_i] / sum;
+              }
+              double rand = Math.random();
+              double count = 0.0;
+              int machine_j;
+              for(machine_j=0;machine_j<MACHINE;machine_j++){
+                count += machine_prob[job_i][task_i][machine_j];
+                if(count>r)break;
+              }
+              machine_select[task][job][ant]=machine_j;
+            }
+          }
+
+          for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+
+          }
+
         }//処理、配置、マシーンの決定終了(antループ)
         
+      }//SEDAILOOP
         
-      }
+        
 
 
 
