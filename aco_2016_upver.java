@@ -217,13 +217,13 @@ public class aco_2016_upver {
         int ant_i,task_j;
         int syori_select[][][][]   = new int[ANT][JOB][TASK_MAX][TASK_MAX];
         int haichi_select[][]      = new int[ANT][JOB];
-        int machine_select[][][]   = new int[ANT][JOB][TASK_MAX];
+        int machine_select[][][]   = new int[ANT][JOB][TASK_MAX];//selsect_machine -> machine_select
         int job_select[][]         = new int[ANT][TASK_MAX];
         int task_select[][][]      = new int[ANT][JOB][TASK_MAX];
 
-        int[] haichi_num_task = new int[JOB];
-        int[][] haichi_job    = new;
-        int[][] haichi_task   = new;
+        int haichi_num_task[] = new int[JOB];
+        int haichi_job[][]    = new int[ANT][TASK_MAX];
+        int haichi_task[][]   = new int[ANT][TASK_MAX];
 
 
 
@@ -253,7 +253,7 @@ public class aco_2016_upver {
           }
 
           //↓の変数ってなんだっけ
-          int haichi_job_select[][][] = new int[JOB][TASK_MAX][ANT];
+          int haichi_job_select[][][] = new int[ANT][JOB][TASK_MAX];
 
           for(job_i=0;job_i<JOB;job_i++){
             for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
@@ -299,7 +299,7 @@ public class aco_2016_upver {
 
           for(job_i=0;job_i<JOB;job_i++){
             haichi_select[ant_i][job_i] = 1;
-            haichi_num_task = 0;
+            haichi_num_task[job_i] = 0;
           }
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             
@@ -320,11 +320,19 @@ public class aco_2016_upver {
 
             job_select[ant_i][haichi_i] = job_i;
 
-
+            int temp = haichi_num_task[job_i];
+            hichi_task[ant_i][haichi_i] = task_list[job_i][temp];
+            haichi_job[ant_i][haichi_i] = job_i;
+            haichi_num_task[job_i]++;
+            if(haichi_num_task[job_i] >= TASK[job_i]){
+              for(int i=haichi_i;i<TASK_MAX;i++){
+                haichi_job_select[ant_i][job_i][i] = 0;
+              }
+              haichi_select[ant_i][job_i] = 0;
+            }
           }
 
-
-            //マシーン割当
+          //マシーン割当
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
               double sum = 0.0;
@@ -341,7 +349,7 @@ public class aco_2016_upver {
                 count += machine_prob[job_i][task_i][machine_j];
                 if(count>r)break;
               }
-              machine_select[task][job][ant]=machine_j;
+              machine_select[ant_i][job_i][task_i] = machine_j;
             }
           }
 
@@ -352,13 +360,8 @@ public class aco_2016_upver {
         }//処理、配置、マシーンの決定終了(antループ)
         
       }//SEDAILOOP
-        
-        
-
-
 
     }//RUN END
-
 
   }
 }
