@@ -262,7 +262,7 @@ public class aco_2016_upver {
           }
         }
 
-        int task_list = new int [JOB][TASK_MAX];
+        int task_list[][] = new int [JOB][TASK_MAX];
 
         //処理、配置、マシーンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
@@ -353,8 +353,13 @@ public class aco_2016_upver {
             }
           }
 
-          for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+          int haichi_machine[][] = new int[ANT][TASK_MAX];
 
+          //haihi_machineの代入
+          for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+            int temp_task = haichi_taks[ant_i][haichi_i];
+            int temp_job  = haihi_job[ant_i][haichi_i];
+            haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
           }
 
         }//処理、配置、マシーンの決定終了(antループ)
