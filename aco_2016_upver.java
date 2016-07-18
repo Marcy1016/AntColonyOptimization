@@ -361,6 +361,7 @@ public class aco_2016_upver {
             int temp_job  = haihi_job[ant_i][haichi_i];
             haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
           }
+          //マシーン割当終了
 
         }//処理、配置、マシーンの決定終了(antループ)
         
