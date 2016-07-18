@@ -331,6 +331,7 @@ public class aco_2016_upver {
               haichi_select[ant_i][job_i] = 0;
             }
           }
+          //配置終了
 
           //マシーン割当
           for(job_i=0;job_i<JOB;job_i++){
