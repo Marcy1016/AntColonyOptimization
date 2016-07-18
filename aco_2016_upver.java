@@ -208,6 +208,9 @@ public class aco_2016_upver {
       }
 
       double best_min_time = SEDAI;//ベスト戦略のための変数
+      int layer_endtime[] = new int[JOB];
+      int layer_number[] = new int[JOB];
+      int sigma[] = new int[JOB];
       
 
       //外部出力ファイルオープン
@@ -366,6 +369,17 @@ public class aco_2016_upver {
           }
           //マシーン割当終了
           //処理、配置、マシーンの決定終了
+
+
+          //ガントチャート開始
+          //必要配列の初期化
+          for(job_i=0;job_i<JOB;job_i++){
+            layer_endtime[job_i]    = -1;
+            layer_number[job_i]     = 0;
+            haichi_num_task[job_i]  = 0;
+            sigma[job_i]            = 0;
+          }
+
 
         }//(antループ終了)
         
