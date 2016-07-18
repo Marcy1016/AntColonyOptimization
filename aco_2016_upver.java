@@ -293,10 +293,11 @@ public class aco_2016_upver {
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
               }
             }
-          }//処理順決定終了
+          }
+          //処理順決定終了
+
 
           //配置決定
-
           for(job_i=0;job_i<JOB;job_i++){
             haichi_select[ant_i][job_i] = 1;
             haichi_num_task[job_i] = 0;
@@ -333,6 +334,7 @@ public class aco_2016_upver {
           }
           //配置終了
 
+
           //マシーン割当
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
@@ -363,8 +365,9 @@ public class aco_2016_upver {
             haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
           }
           //マシーン割当終了
+          //処理、配置、マシーンの決定終了
 
-        }//処理、配置、マシーンの決定終了(antループ)
+        }//(antループ終了)
         
       }//SEDAILOOP
 
