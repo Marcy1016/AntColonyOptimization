@@ -208,9 +208,10 @@ public class aco_2016_upver {
       }
 
       double best_min_time = SEDAI;//ベスト戦略のための変数
-      int layer_endtime[] = new int[JOB];
-      int layer_number[] = new int[JOB];
-      int sigma[] = new int[JOB];
+      int layer_endtime[]    = new int[JOB];
+      int layer_number[]     = new int[JOB];
+      int sigma[]            = new int[JOB];
+      int machine_endtime[]  = new int[MACHINE];
       
 
       //外部出力ファイルオープン
@@ -379,7 +380,9 @@ public class aco_2016_upver {
             haichi_num_task[job_i]  = 0;
             sigma[job_i]            = 0;
           }
+          for(machie_i=0;machie_i<MACHINE;machie_i++){
 
+          }
 
         }//(antループ終了)
         
