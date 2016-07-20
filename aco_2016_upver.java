@@ -381,6 +381,20 @@ public class aco_2016_upver {
             sigma[job_i]            = 0;
           }
           for(machie_i=0;machie_i<MACHINE;machie_i++){
+            machine_endtime[machine_i] = -1;
+          }
+
+          for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+            int temp_task = haichi_task[ant_i][haichi_i];
+            int temp_job = hichi_job[ant_i][haichi_i];
+            int temp_machine = haichi_machine[ant_i][haichi_i];
+            int temp_laynum = layer_number[temp_job];
+
+            int task_time[] = new int[TASK_MAX];
+            task_time[haichi_i] = (int)MAth.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
+
+            int temp_maxTime = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
+            task_en
 
           }
 
