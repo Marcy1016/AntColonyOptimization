@@ -513,7 +513,7 @@ public class aco_2016_up{
 					/speed[haichimachine]);
 					
 					temp                           =Math.max(layer_endtime[haichijob],machine_endtime[haichimachine]);
-					task_starttime[haichi]         =temp+1;
+					task_starttime[haichi]         =temp+1;//ここで使う意味？
 					task_endtime[haichi]           =temp+task_time[haichi];
 					machine_endtime[haichimachine] =task_endtime[haichi];
 					
