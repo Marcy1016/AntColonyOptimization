@@ -555,13 +555,9 @@ public class aco_2016_upver {
           best_haichi_task[sedai_i][haichi_i]    = haichi_task[best_ant][haichi_i];
           best_haichi_machine[sedai_i][haichi_i] = haichi_machine[best_ant][haichi_i];
         }
-
-        
-      
-
-        
       }//SEDAILOOP
 
+      
     }//RUN END
 
   }
