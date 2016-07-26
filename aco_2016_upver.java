@@ -442,6 +442,26 @@ public class aco_2016_upver {
         }
         //ここまで6/22追加分
         
+        //フェロモン更新
+          //処理ノードの更新
+        for(job_i=0;job_i<JOB;job_i++){
+          for(syori_i=0;syori_i<TASK[job_i];syori_i++){
+            for(task_i=0;task_i<TASK[job_i];task_i++){
+              for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
+                syori_pheromon[job_i][syori_i][task_i] 
+                  *= (1.0 - syori_select[ant_i][job_i][syori_i][task_i] * EVAPO_SYORI / ANT);
+              }
+              for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
+                if(task_i == select_task[ant_i][job_i][syori_i]){
+                  syori_pheromon[job_i][syori_i][task_i] += disp_pheromon[ant_i];
+                }
+              }
+            }
+          }
+          
+
+          
+        }
 
         
       }//SEDAILOOP
