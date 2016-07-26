@@ -229,7 +229,9 @@ public class aco_2016_upver {
         int haichi_job[][]    = new int[ANT][TASK_MAX];
         int haichi_task[][]   = new int[ANT][TASK_MAX];
 
-        int latest_endtime[] = int[ANT];
+        int latest_endtime[] = new int[ANT];
+
+        double disp_pheromon[] = new double[ANT];
 
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
@@ -407,8 +409,19 @@ public class aco_2016_upver {
               layer_number[temp_job]++;
             }
           }
-          
 
+          latest_endtime[ant_i] = 0;
+          
+          for(job_i=0;job_i<JOB;job_i++){
+            if(layer_endtime[job_i]>latest_endtime[ant_i]){
+              latest_endtime[ant_i] = layer_endtime[job_i];
+            } 
+          }
+          disp_pheromon[ant_i] = PARAMETER_A - PARAMETER_B * latest_endtime[ant];
+          if(disp_pheromon[ant_i] <= 1.0){
+            disp_pheromon[ant_i] = 1.0;
+          }
+          //ガントチャート終了  
         }//(antループ終了)
         
       }//SEDAILOOP
