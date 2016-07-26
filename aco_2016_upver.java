@@ -423,6 +423,26 @@ public class aco_2016_upver {
           }
           //ガントチャート終了  
         }//(antループ終了)
+
+        //ここから10数行は6/22追加分である
+        double min_latest_endtime = layer_endtime[0];
+        int min_ant = 0;
+        for(ant_i=1;ant_i<ANT;ant_i++){
+          if(min_latest_endtime > latest_endtime[ant_i]){
+            min_latest_endtime = latest_endtime[ant_i];
+            min_ant = ant_i;
+          }
+        }
+        
+        if(best_min_time > min_latest_endtime){
+          best_min_time = min_latest_endtime;
+          if(k > 100){
+            disp_pheromon[min_ant] *= 3;
+          }
+        }
+        //ここまで6/22追加分
+        
+
         
       }//SEDAILOOP
 
