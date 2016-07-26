@@ -168,6 +168,19 @@ public class aco_2016_upver {
     double haichi_prob  = new double[JOB][TASK_MAX];
     double machine_prob = new double[JOB][MACHINE][TASK_MAX];
 
+    //外部出力用の配列準備
+    double result_pmax[][] = new double [RUN][SEDAI+1];
+    double result_pmin[][] = new double [RUN][SEDAI+1];
+    double result_pave[][] = new double [RUN][SEDAI+1];
+    int result_machine[]   = new int [RUN];
+    int result_job[]       = new int [RUN];
+    int result_task[]      = new int [RUN];
+    int result_ant[]       = new int [RUN];
+    int best_haichi_job[][]     = new int[SEDAI+1][TASK_MAX];
+    int best_haichi_task[][]    = new int[SEDAI+1][TASK_MAX];
+    int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
+
+
     //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
@@ -225,9 +238,11 @@ public class aco_2016_upver {
         int job_select[][]         = new int[ANT][TASK_MAX];
         int task_select[][][]      = new int[ANT][JOB][TASK_MAX];
 
-        int haichi_num_task[] = new int[JOB];
-        int haichi_job[][]    = new int[ANT][TASK_MAX];
-        int haichi_task[][]   = new int[ANT][TASK_MAX];
+        int haichi_num_task[]  = new int[JOB];
+        int haichi_job[][]     = new int[ANT][TASK_MAX];
+        int haichi_task[][]    = new int[ANT][TASK_MAX];
+        int haichi_machine[][] = new int[ANT][TASK_MAX];
+
 
         int latest_endtime[] = new int[ANT];
 
@@ -363,11 +378,9 @@ public class aco_2016_upver {
             }
           }
 
-          int haichi_machine[][] = new int[ANT][TASK_MAX];
-
           //haihi_machineの代入
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
-            int temp_task = haichi_taks[ant_i][haichi_i];
+            int temp_task = haichi_task[ant_i][haichi_i];
             int temp_job  = haihi_job[ant_i][haichi_i];
             haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
           }
@@ -525,10 +538,23 @@ public class aco_2016_upver {
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
           pw.println("Sedai " + "," + " Best " + "," + "," + " Bad " +"," + " Average ");
-          
+          //println("");を上にあったprint => printlnに変更した
+          result_ant[run_i]     = ant_i;
+          result_job[run_i]     = job_i;
+          result_task[run_i]    = task_i;
+          result_machine[run_i] = machine_i;
         }
+        pw.println(sedai_i + " , " + pmin[sedai_i] + " , " + pmax[sedai_i] + " , " + pave[sedai_i] + " , ");
+        //println("");を上にあったprint => printlnに変更した
+        result_pmin[run_i][sedai_i] = pmin[sedai_i];
+        result_pmax[run_i][sedai_i] = pmax[sedai_i];
+        result_pave[run_i][sedai_i] = pave[sedai_i];
 
-
+        for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+          best_haichi_job[sedai_i][haichi_i]     = haichi_job[best_ant][haichi_i];
+          best_haichi_task[sedai_i][haichi_i]    = haichi_task[best_ant][haichi_i];
+          best_haichi_machine[sedai_i][haichi_i] = haichi_machine[best_ant][haichi_i];
+        }
 
         
       
