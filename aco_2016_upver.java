@@ -229,6 +229,7 @@ public class aco_2016_upver {
         int haichi_job[][]    = new int[ANT][TASK_MAX];
         int haichi_task[][]   = new int[ANT][TASK_MAX];
 
+        int latest_endtime[] = int[ANT];
 
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
@@ -384,19 +385,29 @@ public class aco_2016_upver {
             machine_endtime[machine_i] = -1;
           }
 
+          int task_time[] = new int[TASK_MAX];
+          int task_endtime[] = new int[TASK_MAX];
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             int temp_task = haichi_task[ant_i][haichi_i];
             int temp_job = hichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum = layer_number[temp_job];
-
-            int task_time[] = new int[TASK_MAX];
+  
             task_time[haichi_i] = (int)MAth.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
 
             int temp_maxTime = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
-            task_en
+            task_endtime = temp_maxTime + task_time[haichi_i];
+            machine_endtime[temp_machine] = task_endtime[haichi_i];
 
+            sigma[temp_job] = Math.max(sigma[temp_job],task_endtime[haichi_i]);
+            haichi_num_task[temp_job]++;
+
+            if(haichi_num_task[temp_job] == F_TASK[temp_laynum+1][temp_job]){
+              layer_endtime[temp_job] = sigma[temp_job];
+              layer_number[temp_job]++;
+            }
           }
+          
 
         }//(antループ終了)
         
