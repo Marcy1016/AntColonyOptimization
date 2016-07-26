@@ -271,7 +271,7 @@ public class aco_2016_upver {
 
         int task_list[][] = new int [JOB][TASK_MAX];
 
-        //処理、配置、マシーンの決定
+        //処理、配置、マシンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
 
           //処理順の決定
@@ -342,7 +342,7 @@ public class aco_2016_upver {
           //配置終了
 
 
-          //マシーン割当
+          //マシン割当
           for(job_i=0;job_i<JOB;job_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
               double sum = 0.0;
@@ -371,8 +371,8 @@ public class aco_2016_upver {
             int temp_job  = haihi_job[ant_i][haichi_i];
             haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
           }
-          //マシーン割当終了
-          //処理、配置、マシーンの決定終了
+          //マシン割当終了
+          //処理、配置、マシンの決定終了
 
 
           //ガントチャート開始
@@ -383,7 +383,7 @@ public class aco_2016_upver {
             haichi_num_task[job_i]  = 0;
             sigma[job_i]            = 0;
           }
-          for(machie_i=0;machie_i<MACHINE;machie_i++){
+          for(machine_i=0;machine_i<MACHINE;machine_i++){
             machine_endtime[machine_i] = -1;
           }
 
@@ -443,7 +443,7 @@ public class aco_2016_upver {
         //ここまで6/22追加分
         
         //フェロモン更新
-          //処理ノードの更新
+        //処理ノードの更新
         for(job_i=0;job_i<JOB;job_i++){
           for(syori_i=0;syori_i<TASK[job_i];syori_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
@@ -458,10 +458,80 @@ public class aco_2016_upver {
               }
             }
           }
-          
+        }
+        //配置ノードの更新
+        for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+          for(job_i=0;job_i<JOB;job_i++){
+            for(ant_i=0;ant_i<ANT;ant_i++){
+              haichi_pheromon[job_i][haichi_i]
+                *= (1.0 - haichi_job_select[ant_i][haichi_i][haichi_i][job_i] * EVAPO_HAICHI / ANT);
+            }
+          }
+          for(job_i=0;job_i<JOB;job_i++){
+            for(ant_i=0;ant_i<ANT;ant_i++){
+              if(job_i == job_select[ant_i][haichi_i]){
+                haichi_pheromon[job_i][haichi_i] += disp_pheromon[ant_i];
+              }
+            }
+          }
+        }
+        //マシン割当の更新
+        for(job_i=0;job_i<JOB;job_i++){
+          for(task_i=0;task_i<TASK_MAX;task_i++){
+            for(machine_i=0;machine_i<MACHINE;machine_i++){
+              machine_pheromon[job_i][task_i][machine_i]
+                *= (1.0 - EVAPO_MACHINE);
+            }
+          }
+          for(task_i=0;task_i<TASK[job_i];task_i++){
+            for(machine_i=0;machine_i<MACHINE;machine_i++){
+              for(ant_i=0;ant_i<ANT;ant_i++){
+                if(machine_i == selsect_machine[ant_i][job_i][task_i]){
+                  machine_pheromon[job_i][task_i][machine_i]
+                }
+              }
+            }
+          }
+        } 
+        //フェロモン更新終了
 
+        //外部出力開始
+        int best_ant;
+        double pmax[] = new double[SEDAI+1];
+        double pmin[] = new double[SEDAI+1];
+        double pave[] = new double[SEDAI+1];
+
+        pmax[sedai_i] = -10000.0;
+        pmin[sedai_i] = 10000.0;
+        pave[sedai_i] = 0.0;
+
+        //最大値、最小値、平均のif代入
+        for(ant_i=0;ant_i<ANT;ant_i++){
+          if(pmax[sedai_i]<latest_endtime[ant_i]){
+            pmax[sedai_i] = latest_endtime[ant_i];
+          }
+          if(pmin[sedai_i>latest_endtime[ant_i]]){
+            pmin[sedai_i] = latest_endtime[ant_i];
+            best_ant = ant_i;
+          }
+          pave[sedai_i] += latest_endtime[ant_i];
+        }
+        pave[sedai_i] = pave[sedai_i] / ANT;
+
+        System.out.println("SEDAI " + sedai_i + " Generation best = " + pmin[sedai_i]);
+        System.out.println("SEDAI " + sedai_i + " Generation bad  = " + pmax[sedai_i]);
+        System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i] + "\n");
+
+        if(sedai_i == 0){
+          pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
+          pw.println("Sedai " + "," + " Best " + "," + "," + " Bad " +"," + " Average ");
           
         }
+
+
+
+        
+      
 
         
       }//SEDAILOOP
