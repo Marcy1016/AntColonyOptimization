@@ -226,7 +226,6 @@ public class aco_2016_upver {
       int sigma[]            = new int[JOB];
       int machine_endtime[]  = new int[MACHINE];
       
-
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
       for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
@@ -557,7 +556,45 @@ public class aco_2016_upver {
         }
       }//SEDAILOOP
 
-      
+      //最後のガントチャート？？
+      //初期化はじめ
+      for(job_i=0;job_i<JOB;job_i++){
+        layer_endtime[job_i]    = -1;
+        layer_number[job_i]     = 0;
+        haichi_num_task[job_i]  = 0;
+        sigma[job_i]            = 0;
+      }
+      for(machine_i=0;machine_i<MACHINE;machine_i++){
+        machine_endtime[machine_i] = -1;
+      }//おわり
+
+      pw.println("haichi "+","+" Machine "+","+" Job "+","+" Task"+","+" Start Time "+","+" End Time");
+      //println("");を上にあったprint => printlnに変更した
+      for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
+        //best_haichi_XXX[SEDAI][haichi_i] SEDAI => あってるの？？？？ 
+        int temp_Bjob     = best_haichi_job[SEDAI][haichi_i];
+        int temp_Btask    = best_haichi_task[SEDAI][haichi_i];
+        int temp_Bmachine = best_haichi_machine[SEDAI][haichi_i];
+        int temp_laynum   = layer_number[temp_Bjob];
+        task_time[haichi_i]    = (int)Math.ceil(TASK_VOLUME[temp_Bjob][temp_Btask] / SPEED[temp_Bmachine]);
+        int temp_maxTime       = (int)Math.max(layer_endtime[temp_Bjob],machine_endtime[temp_Bmachine]);
+        int temp_startTime     = temp_maxTime + 1;
+        task_endtime[haichi_i] = temp_maxTime + task_time[haichi_i];
+        machine_endtime[temp_Bmachine] = task_endtime[haichi_i];
+        sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
+        
+        haichi_num_task[temp_Bjob]++;
+        if(haichi_num_task[temp_Bjob] == F_TASK[temp_laynum+1][temp_Bjob]){
+          layer_endtime[temp_Bjob] = sigma[temp_Bjob];
+          layer_number[temp_Bjob]++;
+        }
+        pw.println("");
+        pw.print(haichi_i + " , " + best_haichi_machine[SEDAI][haichi_i] + " , " 
+                                  + best_haichi_job[SEDAI][haichi_i] + " , " 
+                                  + best_haichi_task[SEADAI][haichi_i] + " , " 
+                                  + temp_startTime + " , " + task_endtime[haichi_i] + " , ");
+      }
+      pw.close();
     }//RUN END
 
   }
