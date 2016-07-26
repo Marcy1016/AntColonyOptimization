@@ -322,7 +322,7 @@ public class aco_2016_upver {
           //配置決定
           for(job_i=0;job_i<JOB;job_i++){
             haichi_select[ant_i][job_i] = 1;
-            haichi_num_task[job_i] = 0;
+            haichi_num_task[job_i]      = 0;
           }
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             
@@ -334,7 +334,7 @@ public class aco_2016_upver {
               haichi_prob[job_i][haichi_i] = haichi_pheromon[job_i][haichi_i] * haichi_select[ant_i][job_i] / sum;
             }
 
-            double rand = Math.random();
+            double rand  = Math.random();
             double count = 0.0;
             for(job_i=0;job_i<JOB;job_i){
               count += haichi_prob[job_i][haichi_i];
@@ -367,7 +367,7 @@ public class aco_2016_upver {
               for(machine_i=0;machine_i<MACHINE;machine_i++){
                 machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][task_i][machine_i] / sum;
               }
-              double rand = Math.random();
+              double rand  = Math.random();
               double count = 0.0;
               int machine_j;
               for(machine_j=0;machine_j<MACHINE;machine_j++){
@@ -400,18 +400,18 @@ public class aco_2016_upver {
             machine_endtime[machine_i] = -1;
           }
 
-          int task_time[] = new int[TASK_MAX];
+          int task_time[]    = new int[TASK_MAX];
           int task_endtime[] = new int[TASK_MAX];
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
-            int temp_task = haichi_task[ant_i][haichi_i];
-            int temp_job = hichi_job[ant_i][haichi_i];
+            int temp_task    = haichi_task[ant_i][haichi_i];
+            int temp_job     = hichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
-            int temp_laynum = layer_number[temp_job];
+            int temp_laynum  = layer_number[temp_job];
   
             task_time[haichi_i] = (int)MAth.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
 
             int temp_maxTime = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
-            task_endtime = temp_maxTime + task_time[haichi_i];
+            task_endtime                  = temp_maxTime + task_time[haichi_i];
             machine_endtime[temp_machine] = task_endtime[haichi_i];
 
             sigma[temp_job] = Math.max(sigma[temp_job],task_endtime[haichi_i]);
@@ -443,7 +443,7 @@ public class aco_2016_upver {
         for(ant_i=1;ant_i<ANT;ant_i++){
           if(min_latest_endtime > latest_endtime[ant_i]){
             min_latest_endtime = latest_endtime[ant_i];
-            min_ant = ant_i;
+            min_ant            = ant_i;
           }
         }
         
@@ -525,7 +525,7 @@ public class aco_2016_upver {
           }
           if(pmin[sedai_i>latest_endtime[ant_i]]){
             pmin[sedai_i] = latest_endtime[ant_i];
-            best_ant = ant_i;
+            best_ant      = ant_i;
           }
           pave[sedai_i] += latest_endtime[ant_i];
         }
