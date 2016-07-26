@@ -597,5 +597,60 @@ public class aco_2016_upver {
       pw.close();
     }//RUN END
 
+
+    PrintWriter result_pw = new PrintWriter(new BufferedWriter(new FileWriter("other" + filename + filename_ext)));
+
+    result_pw.println("RUN, MACHINE, JOB, TASK, ANT");
+    for(run_i=0;run_i<RUN;run_i++){
+      result_pw.println(run_i + " , " + result_machine[run_i] + " , " + result_job[run_i] + " , " + result_task[run_i] + " , " + result_ant[run_i]); 
+    }
+    result_pw.println("");
+
+    //min
+    result_pw.println("min output");
+    result_pw.print("SEDAI ");
+    for(run_i=0;run_i<RUN;run_i++){
+      result_pw.print(", run = " + run_i);
+    }
+    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+      result_pw.println("");
+      result_pw.print(sedai_i);
+      for(run_i=0;run_i<RUN;run_i++){
+        result_pw.print(" , " + result_pmin[run_i][sedai_i]);
+      }
+    }
+    result_pw.println("");
+    result_pw.println("");
+    
+    //max
+    result_pw.println("max output");
+    result_pw.print("SEDAI ");
+    for(run_i=0;run_i<RUN;run_i++){
+      result_pw.print(", run = " + run_i);
+    }
+    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+      result_pw.println("");
+      result_pw.print(sedai_i);
+      for(run_i=0;run_i<RUN;run_i++){
+        result_pw.print(" , " + result_pmax[run_i][sedai_i]);
+      }
+    }
+    result_pw.println("");
+    result_pw.println("");
+
+    //ave
+    result_pw.println("ave output");
+    result_pw.print("SEDAI ");
+    for(run_i=0;run_i<RUN;run_i++){
+      result_pw.print(", run = " + run_i);
+    }
+    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+      result_pw.println("");
+      result_pw.print(sedai_i);
+      for(run_i=0;run_i<RUN;run_i++){
+        result_pw.print(" , " + result_pave[run_i][sedai_i]);
+      }
+    }
+    result_pw.close();
   }
 }
