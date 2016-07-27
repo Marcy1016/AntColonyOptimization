@@ -187,7 +187,7 @@ public class aco_2016_upver {
 
       //Machine割り当てノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
-        for(task_i=0;task_i<TASK[job_i];task_i){
+        for(task_i=0;task_i<TASK[job_i];task_i++){
           for(machine_i=0;machine_i<MACHINE;machine_i++){
             if(TASK_SIZE[task_i][job_i] <= MACHINE_SIZE[machine_i]){
               machine_pheromon[machine_i][task_i][job_i] = INITIAL_PHEROMON;
@@ -281,7 +281,7 @@ public class aco_2016_upver {
 
               double rand   = Math.random();
               double count  = 0.0;
-              for(task_i=0;task_i<TASK[job_i];task_i){
+              for(task_i=0;task_i<TASK[job_i];task_i++){
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
@@ -477,7 +477,7 @@ public class aco_2016_upver {
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){
                 if(machine_i == selsect_machine[ant_i][job_i][task_i]){
-                  machine_pheromon[job_i][task_i][machine_i];
+                  machine_pheromon[job_i][task_i][machine_i] += disp_pheromon[ant_i];
                 }
               }
             }
