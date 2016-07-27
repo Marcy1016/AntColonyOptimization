@@ -597,7 +597,7 @@ public class aco_2016_upver {
       pw.close();
     }//RUN END
 
-
+    //result外部出力部
     PrintWriter result_pw = new PrintWriter(new BufferedWriter(new FileWriter("other" + filename + filename_ext)));
 
     result_pw.println("RUN, MACHINE, JOB, TASK, ANT");
