@@ -8,7 +8,6 @@ public class aco_2016_upver {
     // ファイル読み込みのための宣言、代入
     br = new BufferdReader(new FileReader(args[0]));
     br1 = new BufferdReader(new FileReader(args[1]));
-    br2 = new BufferdReader(new FileReader(args[2]));
     
     String str;
     int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
@@ -23,7 +22,7 @@ public class aco_2016_upver {
     int TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
 
     try{
-      while((str == br.readLine()) != null){
+      while((str = br.readLine()) != null){
         switch(str){
           case "RUN":
             RUN       = Integer.parseInt(br.readLine());//br1
@@ -34,28 +33,12 @@ public class aco_2016_upver {
           case "SEDAI":
             SEDAI      = Integer.parseInt(br.readLine());//br1
             break;
-          case "JOB":
-            JOB       = Integer.parseInt(br.readLine());//削除
-            break;
           case "LAYER_MAX":
-            LAYER_MAX = Integer.parseInt(br.readLine());//
-            break;
-          case "TASK_MAX":
-            TASK_MAX  = Integer.parseInt(br.readLine());//削除
+            LAYER_MAX = Integer.parseInt(br.readLine());//br1
             break;
           case "MACHINE":
-            MACHINE   = Integer.parseInt(br.readLine());//br1 or br2
+            MACHINE   = Integer.parseInt(br.readLine());//br1
             break;
-            /*
-          case "U_ub":
-            U_UB      = Integer.parseInt(br.readLine());
-            break;
-            */
-        }
-      }
-
-      while((str _ br1.readLine()) != null){
-        switch(str){
           case "INITIAL_PHEROMON":
             INITIAL_PHEROMON  = Double.parseDouble(br1.readLine());
             break;
@@ -77,7 +60,6 @@ public class aco_2016_upver {
         }
       }
 
-      //TASK          = new int[JOB];
       TASK_SIZE     = new int[JOB][TASK_MAX];
       TASK_VOLUME   = new int[JOB][TASK_MAX];
       LAYER         = new int[JOB];
@@ -88,7 +70,7 @@ public class aco_2016_upver {
       //初期化
       TASK_MAX = 0;
 
-      while((str = br2.readLine()) != null){
+      while((str = br1.readLine()) != null){
         switch(str){
           case "TASK":
             String[] temp = br2.readLine().split(",",0);
@@ -147,13 +129,11 @@ public class aco_2016_upver {
     finally{
       br.close();
       br1.close();
-      br2.close();
     }
 
     //外部出力のファイル名、拡張子の宣言・設定
     String filename     = "result_upver("+args[0].replace(".txt", "_")
-                                         +args[1].replace(".txt", "_")
-                                         +args[2].replace(".txt", ")");
+                                         +args[1].replace(".txt", "_");
     String filename_ext = ".csv";
 
 
