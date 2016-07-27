@@ -12,7 +12,7 @@ public class aco_2016_upver {
     String str;
     int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
 
-    int job_i,task_i,layer_i,machine_i;
+    int job_i,task_i,layer_i,machine_i,sedai_i;
     
     Double  INITIAL_PHEROMON,PARAMETER_A,PARAMETER_B,
             EVAPO_SYORI,EVAPO_HAICHI,EVAPO_MACHINE;
@@ -40,22 +40,22 @@ public class aco_2016_upver {
             MACHINE   = Integer.parseInt(br.readLine());//br1
             break;
           case "INITIAL_PHEROMON":
-            INITIAL_PHEROMON  = Double.parseDouble(br1.readLine());
+            INITIAL_PHEROMON  = Double.parseDouble(br.readLine());
             break;
           case "PARAMETER_A":
-            PARAMETER_A       = Double.parseDouble(br1.readLine());
+            PARAMETER_A       = Double.parseDouble(br.readLine());
             break;
           case "PARAMETER_B":
-            PARAMETER_B       = Double.parseDouble(br1.readLine());
+            PARAMETER_B       = Double.parseDouble(br.readLine());
             break;
           case "EVAPO_SYORI":
-            EVAPO_SYORI       = Double.parseDouble(br1.readLine());
+            EVAPO_SYORI       = Double.parseDouble(br.readLine());
             break;
           case "EVAPO_HAICHI":
-            EVAPO_HAICHI      = Double.parseDouble(br1.readLine());
+            EVAPO_HAICHI      = Double.parseDouble(br.readLine());
             break;
           case "EVAPO_MACHINE":
-            EVAPO_MACHINE     = Double.parseDouble(br1.readLine());
+            EVAPO_MACHINE     = Double.parseDouble(br.readLine());
             break;
         }
       }
@@ -73,7 +73,7 @@ public class aco_2016_upver {
       while((str = br1.readLine()) != null){
         switch(str){
           case "TASK":
-            String[] temp = br2.readLine().split(",",0);
+            String[] temp = br1.readLine().split(",",0);
             TASK = new int[temp.length];
             JOB = temp.length;
             for(job_i=0;job_i<JOB;job_i++){
@@ -84,7 +84,7 @@ public class aco_2016_upver {
           case "TASK_SIZE":
             TASK_SIZE = new int[JOB][];
             for(job_i=0;job_i<JOB;job_i++){
-              temp = br2.readLine().split(",",0);
+              temp = br1.readLine().split(",",0);
               TASK_SIZE[job_i] = new int[temp.length];
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);
@@ -94,30 +94,30 @@ public class aco_2016_upver {
           case "TASK_VOLUME":
             for(job_i=0;job_i<JOB;job_i++){
               for(task_i=0;task_i<TASK[job_i];task_i++){
-                TASK_VOLUME[job_i][task_i] = Integer.parseInt(br2.readLine());
+                TASK_VOLUME[job_i][task_i] = Integer.parseInt(br1.readLine());
               }
             }
             break;
           case "LAYER":
             for(job_i=0;job_i<JOB;job_i++){
-              LAYER[job_i] = Integer.parseInt(br2.readLine());
+              LAYER[job_i] = Integer.parseInt(br1.readLine());
             }
             break;
           case "F_TASK":
             for(job_i=0;job_i<JOB;job_i++){
               for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
-                F_TASK[job_i][layer_i] = Integer.parseInt(br2.readLine());
+                F_TASK[job_i][layer_i] = Integer.parseInt(br1.readLine());
               }
             }
             break;
           case "MACHINE_SIZE":
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              MACHINE_SIZE[machine_i] = Integer.parseInt(br2.readLine());
+              MACHINE_SIZE[machine_i] = Integer.parseInt(br1.readLine());
             }
             break;
           case "SPEED":
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              SPEED[machine_i] = Integer.parseInt(br2.readLine());
+              SPEED[machine_i] = Integer.parseInt(br1.readLine());
             }
             break;
         }
@@ -138,13 +138,13 @@ public class aco_2016_upver {
     int run_i,syori_i,haichi_i;
 
     double syori_pheromon[][][]   = new double[JOB][MACHINE][TASK_MAX];
-    double haichi_pheromon[][][]  = new double[JOB][TASK_MAX];
+    double haichi_pheromon[][]  = new double[JOB][TASK_MAX];
     double machine_pheromon[][][] = new double[JOB][MACHINE][TASK_MAX];
 
     //どうしてdouble[JOB][TASK_MAX][TASK_MAX]なのだろう
-    double syori_prob   = new double[JOB][TASK_MAX][TASK_MAX];
-    double haichi_prob  = new double[JOB][TASK_MAX];
-    double machine_prob = new double[JOB][MACHINE][TASK_MAX];
+    double syori_prob[][][]   = new double[JOB][TASK_MAX][TASK_MAX];
+    double haichi_prob[][]  = new double[JOB][TASK_MAX];
+    double machine_prob[][][] = new double[JOB][MACHINE][TASK_MAX];
 
     //外部出力用の配列準備
     double result_pmax[][] = new double [RUN][SEDAI+1];
@@ -203,10 +203,14 @@ public class aco_2016_upver {
       int layer_number[]     = new int[JOB];
       int sigma[]            = new int[JOB];
       int machine_endtime[]  = new int[MACHINE];
+      int haichi_num_task[]  = new int[JOB];
+
+      int task_time[]    = new int[TASK_MAX];
+      int task_endtime[] = new int[TASK_MAX];
       
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
-      for(int sedai_i=0;sedai_i<SEDAI;sedai_i++){
+      for(sedai_i=0;sedai_i<SEDAI;sedai_i++){
 
         int ant_i,task_j;
         int syori_select[][][][]   = new int[ANT][JOB][TASK_MAX][TASK_MAX];
@@ -214,24 +218,24 @@ public class aco_2016_upver {
         int machine_select[][][]   = new int[ANT][JOB][TASK_MAX];//selsect_machine -> machine_select
         int job_select[][]         = new int[ANT][TASK_MAX];
         int task_select[][][]      = new int[ANT][JOB][TASK_MAX];
-
-        int haichi_num_task[]  = new int[JOB];
+        
         int haichi_job[][]     = new int[ANT][TASK_MAX];
         int haichi_task[][]    = new int[ANT][TASK_MAX];
         int haichi_machine[][] = new int[ANT][TASK_MAX];
 
-
         int latest_endtime[] = new int[ANT];
+        int haichi_job_select[][][] = new int[ANT][JOB][TASK_MAX];
 
         double disp_pheromon[] = new double[ANT];
+
 
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
           //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
-            for(task_i=0;task_i<TASK;task_i++){
-              for(task_j=0;task_j<TASK;task_j++){
+            for(task_i=0;task_i<TASK[job_i];task_i++){
+              for(task_j=0;task_j<TASK[job_i];task_j++){
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
               }
             }
@@ -251,23 +255,21 @@ public class aco_2016_upver {
             }
           }
 
-          //↓の変数ってなんだっけ
-          int haichi_job_select[][][] = new int[ANT][JOB][TASK_MAX];
-
           for(job_i=0;job_i<JOB;job_i++){
-            for(haichi_i=0;haichi<TASK_MAX;haichi_i++){
+            for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
               haichi_job_select[ant_i][job_i][haichi_i] = 1;
             }
           }
         }
 
         int task_list[][] = new int [JOB][TASK_MAX];
+        
 
         //処理、配置、マシンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
 
           //処理順の決定
-          for(job_i=0;job_i<JOB;job++){
+          for(job_i=0;job_i<JOB;job_i++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
 
               double sum = 0.0;
@@ -285,7 +287,7 @@ public class aco_2016_upver {
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
-              select_task[ant_i][job_i][syori_i]  = task_i;
+              task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
               for(task_j=syori_i;task_j<TASK[job_i];task_j++){
@@ -321,7 +323,7 @@ public class aco_2016_upver {
             job_select[ant_i][haichi_i] = job_i;
 
             int temp = haichi_num_task[job_i];
-            hichi_task[ant_i][haichi_i] = task_list[job_i][temp];
+            haichi_task[ant_i][haichi_i] = task_list[job_i][temp];
             haichi_job[ant_i][haichi_i] = job_i;
             haichi_num_task[job_i]++;
             if(haichi_num_task[job_i] >= TASK[job_i]){
@@ -349,7 +351,7 @@ public class aco_2016_upver {
               int machine_j;
               for(machine_j=0;machine_j<MACHINE;machine_j++){
                 count += machine_prob[job_i][task_i][machine_j];
-                if(count>r)break;
+                if(count>rand)break;
               }
               machine_select[ant_i][job_i][task_i] = machine_j;
             }
@@ -358,8 +360,8 @@ public class aco_2016_upver {
           //haihi_machineの代入
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             int temp_task = haichi_task[ant_i][haichi_i];
-            int temp_job  = haihi_job[ant_i][haichi_i];
-            haichi_machine[ant_i][haichi_i] = machine_selecta[ant_i][temp_job][temp_task]; 
+            int temp_job  = haichi_job[ant_i][haichi_i];
+            haichi_machine[ant_i][haichi_i] = machine_select[ant_i][temp_job][temp_task]; 
           }
           //マシン割当終了
           //処理、配置、マシンの決定終了
@@ -377,16 +379,12 @@ public class aco_2016_upver {
             machine_endtime[machine_i] = -1;
           }
 
-          int task_time[]    = new int[TASK_MAX];
-          int task_endtime[] = new int[TASK_MAX];
           for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
             int temp_task    = haichi_task[ant_i][haichi_i];
-            int temp_job     = hichi_job[ant_i][haichi_i];
+            int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
-  
-            task_time[haichi_i] = (int)MAth.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
-
+            task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
             task_endtime                  = temp_maxTime + task_time[haichi_i];
             machine_endtime[temp_machine] = task_endtime[haichi_i];
@@ -407,7 +405,7 @@ public class aco_2016_upver {
               latest_endtime[ant_i] = layer_endtime[job_i];
             } 
           }
-          disp_pheromon[ant_i] = PARAMETER_A - PARAMETER_B * latest_endtime[ant];
+          disp_pheromon[ant_i] = PARAMETER_A - PARAMETER_B * latest_endtime[ant_i];
           if(disp_pheromon[ant_i] <= 1.0){
             disp_pheromon[ant_i] = 1.0;
           }
@@ -426,7 +424,7 @@ public class aco_2016_upver {
         
         if(best_min_time > min_latest_endtime){
           best_min_time = min_latest_endtime;
-          if(k > 100){
+          if(sedai_i > 100){
             disp_pheromon[min_ant] *= 3;
           }
         }
@@ -442,7 +440,7 @@ public class aco_2016_upver {
                   *= (1.0 - syori_select[ant_i][job_i][syori_i][task_i] * EVAPO_SYORI / ANT);
               }
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
-                if(task_i == select_task[ant_i][job_i][syori_i]){
+                if(task_i == task_select[ant_i][job_i][syori_i]){
                   syori_pheromon[job_i][syori_i][task_i] += disp_pheromon[ant_i];
                 }
               }
@@ -500,7 +498,7 @@ public class aco_2016_upver {
           if(pmax[sedai_i]<latest_endtime[ant_i]){
             pmax[sedai_i] = latest_endtime[ant_i];
           }
-          if(pmin[sedai_i>latest_endtime[ant_i]]){
+          if(pmin[sedai_i]>latest_endtime[ant_i]){
             pmin[sedai_i] = latest_endtime[ant_i];
             best_ant      = ant_i;
           }
@@ -569,7 +567,7 @@ public class aco_2016_upver {
         pw.println("");
         pw.print(haichi_i + " , " + best_haichi_machine[SEDAI][haichi_i] + " , " 
                                   + best_haichi_job[SEDAI][haichi_i] + " , " 
-                                  + best_haichi_task[SEADAI][haichi_i] + " , " 
+                                  + best_haichi_task[SEDAI][haichi_i] + " , " 
                                   + temp_startTime + " , " + task_endtime[haichi_i] + " , ");
       }
       pw.close();
@@ -590,7 +588,7 @@ public class aco_2016_upver {
     for(run_i=0;run_i<RUN;run_i++){
       result_pw.print(", run = " + run_i);
     }
-    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+    for(sedai_i=0;sedai_i<=SEDAI;sedai_i++){
       result_pw.println("");
       result_pw.print(sedai_i);
       for(run_i=0;run_i<RUN;run_i++){
@@ -606,7 +604,7 @@ public class aco_2016_upver {
     for(run_i=0;run_i<RUN;run_i++){
       result_pw.print(", run = " + run_i);
     }
-    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+    for(sedai_i=0;sedai_i<=SEDAI;sedai_i++){
       result_pw.println("");
       result_pw.print(sedai_i);
       for(run_i=0;run_i<RUN;run_i++){
@@ -622,7 +620,7 @@ public class aco_2016_upver {
     for(run_i=0;run_i<RUN;run_i++){
       result_pw.print(", run = " + run_i);
     }
-    for(sedai_i=0;sedai_i<=SEADAI;sedai_i++){
+    for(sedai_i=0;sedai_i<=SEDAI;sedai_i++){
       result_pw.println("");
       result_pw.print(sedai_i);
       for(run_i=0;run_i<RUN;run_i++){
