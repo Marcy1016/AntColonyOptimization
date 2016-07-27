@@ -6,8 +6,9 @@ public class aco_2016_upver {
   public static void main(String args[]) throws IOException{
   
     // ファイル読み込みのための宣言、代入
-    br = new BufferdReader(new FileReader(args[0]));
-    br1 = new BufferdReader(new FileReader(args[1]));
+    
+    BufferedReader br = new BufferedReader(new FileReader(args[0]));
+    BufferedReader br1 = new BufferedReader(new FileReader(args[1]));
     
     String str;
     int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
@@ -60,10 +61,11 @@ public class aco_2016_upver {
         }
       }
 
-      TASK_SIZE     = new int[JOB][TASK_MAX];
+
       TASK_VOLUME   = new int[JOB][TASK_MAX];
       LAYER         = new int[JOB];
       F_TASK        = new int[JOB][LAYER_MAX+1];
+
       MACHINE_SIZE  = new int[MACHINE];
       SPEED         = new int[MACHINE];
 
@@ -82,7 +84,7 @@ public class aco_2016_upver {
             }
             break;
           case "TASK_SIZE":
-            TASK_SIZE = new int[JOB][];
+            TASK_SIZE = new int[JOB][TASK_MAX];
             for(job_i=0;job_i<JOB;job_i++){
               temp = br1.readLine().split(",",0);
               TASK_SIZE[job_i] = new int[temp.length];
@@ -474,7 +476,7 @@ public class aco_2016_upver {
           for(task_i=0;task_i<TASK[job_i];task_i++){
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){
-                if(machine_i == selsect_machine[ant_i][job_i][task_i]){
+                if(machine_i == machine_select[ant_i][job_i][task_i]){
                   machine_pheromon[job_i][task_i][machine_i] += disp_pheromon[ant_i];
                 }
               }
