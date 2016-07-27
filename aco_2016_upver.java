@@ -452,7 +452,7 @@ public class aco_2016_upver {
           for(job_i=0;job_i<JOB;job_i++){
             for(ant_i=0;ant_i<ANT;ant_i++){
               haichi_pheromon[job_i][haichi_i]
-                *= (1.0 - haichi_job_select[ant_i][haichi_i][haichi_i][job_i] * EVAPO_HAICHI / ANT);
+                *= (1.0 - haichi_job_select[ant_i][haichi_i][job_i] * EVAPO_HAICHI / ANT);
             }
           }
           for(job_i=0;job_i<JOB;job_i++){
