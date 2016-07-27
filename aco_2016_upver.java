@@ -3,24 +3,29 @@ import java.awt.*;
 import java.io.*;
 
 public class aco_2016_upver {
-  public static void main(String args[]) throws IOException{
-  
-    // ファイル読み込みのための宣言、代入
-    
-    BufferedReader br = new BufferedReader(new FileReader(args[0]));
-    BufferedReader br1 = new BufferedReader(new FileReader(args[1]));
-    
-    String str;
-    int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
 
-    int job_i,task_i,layer_i,machine_i,sedai_i;
+  // ファイル読み込みのための宣言、代入
     
-    Double  INITIAL_PHEROMON,PARAMETER_A,PARAMETER_B,
+    static BufferedReader br, br1;
+    
+    static String str;
+    static int RUN,ANT,SEDAI,JOB,LAYER_MAX,TASK_MAX,MACHINE;
+
+    static int job_i,task_i,layer_i,machine_i,sedai_i;
+    
+    static Double  INITIAL_PHEROMON,PARAMETER_A,PARAMETER_B,
             EVAPO_SYORI,EVAPO_HAICHI,EVAPO_MACHINE;
 
     //try文の内で使用するので、try文の外にて宣言 
-    int TASK[],LAYER[],MACHINE_SIZE[],SPEED[];  //machine_sizeはDouble型だったがintに変更
-    int TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
+    static int TASK[],LAYER[],MACHINE_SIZE[],SPEED[];  //machine_sizeはDouble型だったがintに変更
+    static int TASK_SIZE[][],TASK_VOLUME[][],F_TASK[][];
+
+
+  public static void main(String args[]) throws IOException{
+  
+  br = new BufferedReader(new FileReader(args[0]));
+  br1 = new BufferedReader(new FileReader(args[1]));
+    
 
     try{
       while((str = br.readLine()) != null){
@@ -125,11 +130,13 @@ public class aco_2016_upver {
         }
       }
     }
-
-    finally{
-      br.close();
-      br1.close();
+    catch(ArrayIndexOutOfBoundsException e){
+      System.out.println("ファイル読み込み不可");
     }
+    
+    br.close();
+    br1.close();
+    
 
     //外部出力のファイル名、拡張子の宣言・設定
     String filename     = "result_upver("+args[0].replace(".txt", "_")
@@ -486,7 +493,7 @@ public class aco_2016_upver {
         //フェロモン更新終了
 
         //外部出力開始
-        int best_ant;
+        int best_ant = 0;
         double pmax[] = new double[SEDAI+1];
         double pmin[] = new double[SEDAI+1];
         double pave[] = new double[SEDAI+1];
