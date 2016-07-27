@@ -80,8 +80,6 @@ public class aco_2016_upver {
               TASK[job_i] = Integer.parseInt(temp[job_i]);
               TASK_MAX += TASK[job_i];
             }
-            //確認用println
-            System.out.println("TASK_MAX = " + );
             break;
           case "TASK_SIZE":
             TASK_SIZE = new int[JOB][];
@@ -173,7 +171,7 @@ public class aco_2016_upver {
     for(run_i=0;run_i<RUN;run_i++){
       //処理順ノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
-        for(syori_i;syori_i<TASK[job_i];syori_i++){
+        for(syori_i=0;syori_i<TASK[job_i];syori_i++){
           for(task_i=0;task_i<TASK[job_i];task_i++){
             syori_pheromon[task_i][syori_i][job_i] = INITIAL_PHEROMON;
           }
@@ -189,7 +187,7 @@ public class aco_2016_upver {
 
       //Machine割り当てノードの初期化
       for(job_i=0;job_i<JOB;job_i++){
-        for(task_i=0;task_i<TASK;task_i){
+        for(task_i=0;task_i<TASK[job_i];task_i){
           for(machine_i=0;machine_i<MACHINE;machine_i++){
             if(TASK_SIZE[task_i][job_i] <= MACHINE_SIZE[machine_i]){
               machine_pheromon[machine_i][task_i][job_i] = INITIAL_PHEROMON;
@@ -283,14 +281,14 @@ public class aco_2016_upver {
 
               double rand   = Math.random();
               double count  = 0.0;
-              for(task_i=0;<TASK[job_i];task_i){
+              for(task_i=0;task_i<TASK[job_i];task_i){
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
               select_task[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
-              for(task_j=syori_i;task_j<TASK[job_i];task_j){
+              for(task_j=syori_i;task_j<TASK[job_i];task_j++){
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
               }
             }
@@ -315,7 +313,7 @@ public class aco_2016_upver {
 
             double rand  = Math.random();
             double count = 0.0;
-            for(job_i=0;job_i<JOB;job_i){
+            for(job_i=0;job_i<JOB;job_i++){
               count += haichi_prob[job_i][haichi_i];
               if(count>rand)break;//ここでjob_iのループを強制的に終了させ、そのjob_iを下で使う 
             }
@@ -479,7 +477,7 @@ public class aco_2016_upver {
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){
                 if(machine_i == selsect_machine[ant_i][job_i][task_i]){
-                  machine_pheromon[job_i][task_i][machine_i]
+                  machine_pheromon[job_i][task_i][machine_i];
                 }
               }
             }
