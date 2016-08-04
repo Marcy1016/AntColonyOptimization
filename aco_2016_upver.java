@@ -82,6 +82,8 @@ public class aco_2016_upver {
               TASK[job_i] = Integer.parseInt(temp[job_i]);
               TASK_MAX += TASK[job_i];
             }
+            System.out.println("TASK="+Arrays.toString(TASK));
+            System.out.println("TASK_MAX="+TASK_MAX);
             break;
           case "TASK_SIZE":
             TASK_SIZE = new int[JOB][TASK_MAX];
@@ -92,7 +94,7 @@ public class aco_2016_upver {
                 TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);   
               }
             }
-            System.out.println(Arrays.deepToString(TASK_SIZE));
+            System.out.println("TASK_SIZE="+Arrays.deepToString(TASK_SIZE));
             break;
           case "TASK_VOLUME":
             TASK_VOLUME = new int[JOB][TASK_MAX];
@@ -103,7 +105,7 @@ public class aco_2016_upver {
                 TASK_VOLUME[job_i][task_i] = Integer.parseInt(temp[task_i]);
               }
             }
-            System.out.println(Arrays.deepToString(TASK_VOLUME));
+            System.out.println("TASK_VOLUME="+Arrays.deepToString(TASK_VOLUME));
             break;
           case "LAYER":
             LAYER = new int[JOB];
@@ -111,7 +113,7 @@ public class aco_2016_upver {
             for(job_i=0;job_i<JOB;job_i++){
               LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
-            System.out.println(Arrays.toString(LAYER));
+            System.out.println("LAYER="+Arrays.toString(LAYER));
             break;
           case "F_TASK":
             F_TASK        = new int[JOB][LAYER_MAX+1];
@@ -122,21 +124,21 @@ public class aco_2016_upver {
                 F_TASK[job_i][layer_i] = Integer.parseInt(temp[layer_i]);
               }
             }
-            System.out.println(Arrays.deepToString(F_TASK));
+            System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
             break;
           case "MACHINE_SIZE":
             temp = br1.readLine().split(",",0);
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               MACHINE_SIZE[machine_i] = Integer.parseInt(temp[machine_i]);
             }
-            System.out.println(Arrays.toString(MACHINE_SIZE));
+            System.out.println("MACHINE_SIZE="+Arrays.toString(MACHINE_SIZE));
             break;
           case "SPEED":
             temp = br1.readLine().split(",",0);
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               SPEED[machine_i] = Integer.parseInt(temp[machine_i]);
             }
-            System.out.println(Arrays.toString(SPEED));
+            System.out.println("SPEED="+Arrays.toString(SPEED));
             break;
         }
       }
@@ -265,6 +267,8 @@ public class aco_2016_upver {
             //layerjobは一時的変数
             int layerjob            = LAYER[job_i];
             F_TASK[job_i][0]        = 0;
+            System.out.println("ant="+ ant_i +", job_i=" + job_i);
+            System.out.println(Arrays.deepToString(F_TASK));
             F_TASK[job_i][layerjob] = TASK[job_i];
 
             //制約条件の定義？()
