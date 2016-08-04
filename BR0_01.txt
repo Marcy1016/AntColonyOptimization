@@ -1,6 +1,8 @@
+RUN
+1
 ANT
 50
-K
+SEDAI
 6000
 JOB
 3
