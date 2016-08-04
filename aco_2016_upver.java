@@ -199,9 +199,9 @@ public class aco_2016_upver {
         for(task_i=0;task_i<TASK[job_i];task_i++){
           for(machine_i=0;machine_i<MACHINE;machine_i++){
             if(TASK_SIZE[job_i][task_i] <= MACHINE_SIZE[machine_i]){
-              machine_pheromon[job_i][task_i][machine_i] = INITIAL_PHEROMON;
+              machine_pheromon[job_i][machine_i][task_i] = INITIAL_PHEROMON;
             }else{
-              machine_pheromon[job_i][task_i][machine_i] = 0.0;
+              machine_pheromon[job_i][machine_i][task_i] = 0.0;
             }
           }
         }
@@ -350,10 +350,10 @@ public class aco_2016_upver {
             for(task_i=0;task_i<TASK[job_i];task_i++){
               double sum = 0.0;
              for(machine_i=0;machine_i<MACHINE;machine_i++){
-                sum += machine_pheromon[job_i][task_i][machine_i];
+                sum += machine_pheromon[job_i][machine_i][task_i];
               }
               for(machine_i=0;machine_i<MACHINE;machine_i++){
-                machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][task_i][machine_i] / sum;
+                machine_prob[job_i][task_i][machine_i] = machine_pheromon[job_i][machine_i][task_i] / sum;
               }
               double rand  = Math.random();
               double count = 0.0;
@@ -476,7 +476,7 @@ public class aco_2016_upver {
         for(job_i=0;job_i<JOB;job_i++){
           for(task_i=0;task_i<TASK_MAX;task_i++){
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              machine_pheromon[job_i][task_i][machine_i]
+              machine_pheromon[job_i][machine_i][task_i]
                 *= (1.0 - EVAPO_MACHINE);
             }
           }
@@ -484,7 +484,7 @@ public class aco_2016_upver {
             for(machine_i=0;machine_i<MACHINE;machine_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){
                 if(machine_i == machine_select[ant_i][job_i][task_i]){
-                  machine_pheromon[job_i][task_i][machine_i] += disp_pheromon[ant_i];
+                  machine_pheromon[job_i][machine_i][task_i] += disp_pheromon[ant_i];
                 }
               }
             }
