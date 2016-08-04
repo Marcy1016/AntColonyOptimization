@@ -66,11 +66,6 @@ public class aco_2016_upver {
         }
       }
 
-
-      TASK_VOLUME   = new int[JOB][TASK_MAX];
-      LAYER         = new int[JOB];
-      F_TASK        = new int[JOB][LAYER_MAX+1];
-
       MACHINE_SIZE  = new int[MACHINE];
       SPEED         = new int[MACHINE];
 
@@ -99,6 +94,7 @@ public class aco_2016_upver {
             }
             break;
           case "TASK_VOLUME":
+            TASK_VOLUME = new int[JOB][TASK_MAX];
             for(job_i=0;job_i<JOB;job_i++){
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 TASK_VOLUME[job_i][task_i] = Integer.parseInt(br1.readLine());
@@ -106,11 +102,13 @@ public class aco_2016_upver {
             }
             break;
           case "LAYER":
+            LAYER = new int[JOB];
             for(job_i=0;job_i<JOB;job_i++){
               LAYER[job_i] = Integer.parseInt(br1.readLine());
             }
             break;
           case "F_TASK":
+            F_TASK        = new int[JOB][LAYER_MAX+1];
             for(job_i=0;job_i<JOB;job_i++){
               for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
                 F_TASK[job_i][layer_i] = Integer.parseInt(br1.readLine());
@@ -167,7 +165,9 @@ public class aco_2016_upver {
     int best_haichi_task[][]    = new int[SEDAI+1][TASK_MAX];
     int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
 
+    //確認用out.print
     System.out.println(JOB);
+
     //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
@@ -250,7 +250,7 @@ public class aco_2016_upver {
             }
 
             //layerjobは一時的変数
-            int layerjob             = LAYER[job_i];
+            int layerjob            = LAYER[job_i];
             F_TASK[job_i][0]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
