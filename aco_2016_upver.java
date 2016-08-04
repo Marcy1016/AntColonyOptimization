@@ -89,41 +89,54 @@ public class aco_2016_upver {
               temp = br1.readLine().split(",",0);
               TASK_SIZE[job_i] = new int[temp.length];
               for(task_i=0;task_i<TASK[job_i];task_i++){
-                TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);
+                TASK_SIZE[job_i][task_i] = Integer.parseInt(temp[task_i]);   
               }
             }
+            System.out.println(Arrays.deepToString(TASK_SIZE));
             break;
           case "TASK_VOLUME":
             TASK_VOLUME = new int[JOB][TASK_MAX];
             for(job_i=0;job_i<JOB;job_i++){
+              temp = br1.readLine().split(",",0);
+              TASK_VOLUME[job_i] = new int[temp.length];
               for(task_i=0;task_i<TASK[job_i];task_i++){
-                TASK_VOLUME[job_i][task_i] = Integer.parseInt(br1.readLine());
+                TASK_VOLUME[job_i][task_i] = Integer.parseInt(temp[task_i]);
               }
             }
+            System.out.println(Arrays.deepToString(TASK_VOLUME));
             break;
           case "LAYER":
             LAYER = new int[JOB];
+            temp = br1.readLine().split(",",0);
             for(job_i=0;job_i<JOB;job_i++){
-              LAYER[job_i] = Integer.parseInt(br1.readLine());
+              LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
+            System.out.println(Arrays.toString(LAYER));
             break;
           case "F_TASK":
             F_TASK        = new int[JOB][LAYER_MAX+1];
             for(job_i=0;job_i<JOB;job_i++){
+              temp = br1.readLine().split(",",0);
+              F_TASK[job_i] = new int[temp.length];
               for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
-                F_TASK[job_i][layer_i] = Integer.parseInt(br1.readLine());
+                F_TASK[job_i][layer_i] = Integer.parseInt(temp[layer_i]);
               }
             }
+            System.out.println(Arrays.deepToString(F_TASK));
             break;
           case "MACHINE_SIZE":
+            temp = br1.readLine().split(",",0);
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              MACHINE_SIZE[machine_i] = Integer.parseInt(br1.readLine());
+              MACHINE_SIZE[machine_i] = Integer.parseInt(temp[machine_i]);
             }
+            System.out.println(Arrays.toString(MACHINE_SIZE));
             break;
           case "SPEED":
+            temp = br1.readLine().split(",",0);
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              SPEED[machine_i] = Integer.parseInt(br1.readLine());
+              SPEED[machine_i] = Integer.parseInt(temp[machine_i]);
             }
+            System.out.println(Arrays.toString(SPEED));
             break;
         }
       }
