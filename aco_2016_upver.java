@@ -146,7 +146,7 @@ public class aco_2016_upver {
 
     int run_i,syori_i,haichi_i;
 
-    double syori_pheromon[][][]   = new double[JOB][MACHINE][TASK_MAX];
+    double syori_pheromon[][][]   = new double[JOB][TASK_MAX][TASK_MAX];
     double haichi_pheromon[][]  = new double[JOB][TASK_MAX];
     double machine_pheromon[][][] = new double[JOB][MACHINE][TASK_MAX];
 
