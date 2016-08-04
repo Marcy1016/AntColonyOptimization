@@ -167,7 +167,7 @@ public class aco_2016_upver {
     int best_haichi_task[][]    = new int[SEDAI+1][TASK_MAX];
     int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
 
-
+    System.out.println(JOB);
     //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
@@ -250,7 +250,7 @@ public class aco_2016_upver {
             }
 
             //layerjobは一時的変数
-            int layerjob            = LAYER[job_i];
+            int layerjob             = LAYER[job_i];
             F_TASK[job_i][0]        = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
