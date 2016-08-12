@@ -224,10 +224,10 @@ public class aco_2016_up{
 	result_ant     = new int [RUN];
 	
 	//task_size    =new int[TASK_MAX][JOB];
-	task_volume  =new int[TASK_MAX][JOB];
+	//task_volume  =new int[TASK_MAX][JOB];
 	
-	LAYER        =new int[JOB];
-	F_TASK       =new int[LAYER_MAX+1][JOB];	
+	//LAYER        =new int[JOB];
+	//F_TASK       =new int[LAYER_MAX+1][JOB];	
 	machine_size =new double[MACHINE];
 	speed        =new int[MACHINE];
 
@@ -251,6 +251,7 @@ public class aco_2016_up{
 				}
 				break;
 			case "task_size":
+			task_size = new int[TASK_MAX][JOB];
 				for (job=0;job<JOB;job++)
 				{
 					temp = br2.readLine().split(",",0);
@@ -263,6 +264,7 @@ public class aco_2016_up{
 				}
 				break;
 			case "task_volume":
+				task_volume = new int[TASK_MAX][JOB];
 				for (job=0;job<JOB;job++)
 				{
 					temp = br2.readLine().split(",",0);
@@ -275,6 +277,7 @@ public class aco_2016_up{
 				}
 				break;
 			case "LAYER":
+				LAYER = new int[JOB];
 				temp = br2.readLine().split(",",0);
 				for (job=0;job<JOB;job++)
 				{
@@ -283,6 +286,7 @@ public class aco_2016_up{
 				}
 				break;
 			case "F_TASK":
+				F_TASK = new int[LAYER_MAX+1][JOB];
 				for (job=0;job<JOB;job++)
 				{
 					temp = br2.readLine().split(",",0);
