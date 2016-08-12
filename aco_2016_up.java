@@ -289,7 +289,7 @@ public class aco_2016_up{
 					F_TASK[job] = new int[temp.length];
 					for (layer=0;layer<LAYER_MAX;layer++)
 					{
-						F_TASK[layer][job] = Integer.parseInt(temp[task];
+						F_TASK[layer][job] = Integer.parseInt(temp[task]);
 						System.out.println(F_TASK[layer][job]);
 					}
 				}
