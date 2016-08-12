@@ -265,41 +265,48 @@ public class aco_2016_up{
 			case "task_volume":
 				for (job=0;job<JOB;job++)
 				{
+					temp = br2.readLine().split(",",0);
+					task_volume[job] = new int[temp.length];
 					for (task=0;task<TASK[job];task++)
 					{
-						task_volume[task][job] = Integer.parseInt(br2.readLine());
+						task_volume[task][job] = Integer.parseInt(temp[task]);
 						System.out.println(task_volume[task][job]);
 					}
 				}
 				break;
 			case "LAYER":
+				temp = br2.readLine().split(",",0);
 				for (job=0;job<JOB;job++)
 				{
-					LAYER[job] = Integer.parseInt(br2.readLine());
+					LAYER[job] = Integer.parseInt(temp[job]);
 					System.out.println(LAYER[job]);
 				}
 				break;
 			case "F_TASK":
 				for (job=0;job<JOB;job++)
 				{
+					temp = br2.readLine().split(",",0);
+					F_TASK[job] = new int[temp.length];
 					for (layer=0;layer<LAYER_MAX;layer++)
 					{
-						F_TASK[layer][job] = Integer.parseInt(br2.readLine());
+						F_TASK[layer][job] = Integer.parseInt(temp[task];
 						System.out.println(F_TASK[layer][job]);
 					}
 				}
 				break;
 			case "machine_size":
+				temp = br2.readLine().split(",",0);
 				for (machine=0;machine<MACHINE;machine++)
 				{
-					machine_size[machine] = Double.parseDouble(br2.readLine());
+					machine_size[machine] = Double.parseDouble(temp[machine]);
 					System.out.println(machine_size[machine]);
 				}
 				break;
 			case "speed":
+				temp = br2.readLine().split(",",0);
 				for (machine=0;machine<MACHINE;machine++)
 				{
-					speed[machine] = Integer.parseInt(br2.readLine());
+					speed[machine] = Integer.parseInt(temp[machine]);
 					System.out.println(speed[machine]);
 				}
 				break;
