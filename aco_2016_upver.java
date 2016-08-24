@@ -180,16 +180,11 @@ public class aco_2016_upver {
     int best_haichi_task[][]    = new int[SEDAI+1][TASK_MAX];
     int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
 
-    //確認用out.print
-    System.out.println(JOB);
-
     //タスク総数の宣言・代入 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
       total_task += TASK[job_i];
     }
-
-
 
     /*-*-*-*-試行回数のループ-*-*-*-*/
     for(run_i=0;run_i<RUN;run_i++){
