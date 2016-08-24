@@ -119,7 +119,7 @@ public class aco_2016_upver {
             F_TASK        = new int[JOB][LAYER_MAX+1];
             for(job_i=0;job_i<JOB;job_i++){
               temp = br1.readLine().split(",",0);
-              F_TASK[job_i] = new int[temp.length];
+              F_TASK[job_i] = new int[temp.length+1];
               for(layer_i=0;layer_i<LAYER_MAX;layer_i++){
                 F_TASK[job_i][layer_i] = Integer.parseInt(temp[layer_i]);
               }
@@ -260,10 +260,8 @@ public class aco_2016_upver {
             }
 
             //layerjobは一時的変数
-            int layerjob            = LAYER[job_i];
-            F_TASK[job_i][0]        = 0;
-            System.out.println("ant="+ ant_i +", job_i=" + job_i);
-            System.out.println(Arrays.deepToString(F_TASK));
+            int layerjob = LAYER[job_i];
+            F_TASK[job_i][0] = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
             //制約条件の定義？()

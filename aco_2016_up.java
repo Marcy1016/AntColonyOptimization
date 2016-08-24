@@ -390,6 +390,9 @@ public class aco_2016_up{
 				}//end
 			}//end
 			
+
+			
+
 			for(ant=0;ant<ANT;ant++){		
 			//Processing order node
 				for(job=0;job<JOB;job++){
@@ -613,11 +616,11 @@ public class aco_2016_up{
 				pave[k]+=latest_endtime[ant];
 			}
 			pave[k]=pave[k]/ANT;
-			
+			/*
 			System.out.println("K " +k+" Generation best = "+pmin[k]);
 			System.out.println("K " +k+" Generation bad  = "+pmax[k]);
 			System.out.println("K " +k+" Generation ave  = "+pave[k]+"\n");
-		
+			*/
 			if(k==0){
 				pw.println("Machine= " + machine + "," +"Job= "+job+","+ "Task= "+task+ "," + "Ant= "+ant+ "," );
 				pw.print("K"+","+" Best" +","+" Bad"+" ,"+" Average");		
