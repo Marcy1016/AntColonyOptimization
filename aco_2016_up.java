@@ -507,6 +507,7 @@ public class aco_2016_up{
 					haichijob         =haichi_job[haichi][ant];
 					haichimachine     =haichi_machine[haichi][ant];
 					layernumber       =layer_number[haichijob];
+					System.out.println("tsk="+haichitask+"job"+haichijob);
 					task_time[haichi] =(int)Math.ceil(task_volume[haichitask][haichijob]
 					/speed[haichimachine]);
 					

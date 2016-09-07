@@ -180,7 +180,8 @@ public class aco_2016_upver {
     int best_haichi_task[][]    = new int[SEDAI+1][TASK_MAX];
     int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
 
-    //タスク総数の宣言・代入 
+    //タスク総数の宣言・代入
+    //ここはTASK_MAXではないのか 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
       total_task += TASK[job_i];
@@ -301,16 +302,21 @@ public class aco_2016_upver {
               }
 
               double rand   = Math.random();
+              System.out.println("rand="+rand);
+
               double count  = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
+
+              System.out.println("count="+count);
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
               for(task_j=syori_i;task_j<TASK[job_i];task_j++){
                 syori_select[ant_i][job_i][task_i][task_j] = 0;
+                //要注意　配列の順
               }
             }
           }
@@ -347,7 +353,7 @@ public class aco_2016_upver {
             haichi_num_task[job_i]++;
             if(haichi_num_task[job_i] >= TASK[job_i]){
               for(int i=haichi_i;i<TASK_MAX;i++){
-                haichi_job_select[ant_i][job_i][i] = 0;
+                haichi_job_select[ant_i][job_i][i] = 0;//iの場所はここでいいのか
               }
               haichi_select[ant_i][job_i] = 0;
             }
@@ -403,6 +409,7 @@ public class aco_2016_upver {
             int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
+            System.out.println("job="+temp_job+",task="+temp_task+",machine="+temp_machine);
             task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime    = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
             task_endtime[haichi_i]        = temp_maxTime + task_time[haichi_i];
