@@ -294,11 +294,13 @@ public class aco_2016_upver {
 
               double sum = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
+                //syori_pheromon=100.0  syori_select=0 or 1
                 sum += syori_pheromon[job_i][syori_i][task_i] * syori_select[ant_i][job_i][syori_i][task_i];
               }
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 syori_prob[job_i][syori_i][task_i] = syori_pheromon[job_i][syori_i][task_i]
                                                    * syori_select[ant_i][job_i][syori_i][task_i] / sum;
+                System.out.println("syori_prob="+syori_prob[job_i][syori_i][task_i]);
               }
 
               double rand   = Math.random();
