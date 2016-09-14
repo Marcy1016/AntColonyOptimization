@@ -248,7 +248,7 @@ public class aco_2016_upver {
 
         double disp_pheromon[] = new double[ANT];
 
-        System.out.println(JOB);
+  
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
