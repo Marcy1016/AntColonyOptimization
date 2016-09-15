@@ -291,30 +291,22 @@ public class aco_2016_upver {
           //処理順の決定
           for(job_i=0;job_i<JOB;job_i++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
-              System.out.println(syori_i+"回目のループ++++++++++++++++++++");
               double sum = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 //syori_pheromon=100.0  syori_select=0 or 1
                 sum += syori_pheromon[job_i][syori_i][task_i] * syori_select[ant_i][job_i][syori_i][task_i];
-                System.out.println("pheromon"+syori_pheromon[job_i][syori_i][task_i] +",select="+ syori_select[ant_i][job_i][syori_i][task_i]);
               }
-              System.out.println("sum="+sum);
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 syori_prob[job_i][syori_i][task_i] = syori_pheromon[job_i][syori_i][task_i]
                                                    * syori_select[ant_i][job_i][syori_i][task_i] / sum;
-                System.out.println("syori_prob="+syori_prob[job_i][syori_i][task_i]);
               }
 
               double rand   = Math.random();
-              System.out.println("rand="+rand);
-
               double count  = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
-
-              System.out.println("count="+count+",task_i="+task_i);
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
@@ -322,7 +314,6 @@ public class aco_2016_upver {
                 syori_select[ant_i][job_i][task_j][task_i] = 0;
                 //要注意　配列の順
               }
-              System.out.println("ここまで"+syori_i+"回目のループ*****************");
             }
           }
           //処理順決定終了
@@ -414,7 +405,6 @@ public class aco_2016_upver {
             int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
-            System.out.println("job="+temp_job+",task="+temp_task+",machine="+temp_machine);
             task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime    = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
             task_endtime[haichi_i]        = temp_maxTime + task_time[haichi_i];
