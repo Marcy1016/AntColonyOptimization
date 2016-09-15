@@ -254,9 +254,9 @@ public class aco_2016_upver {
         for(ant_i=0;ant_i<ANT;ant_i++){
           //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
-            for(task_i=0;task_i<TASK[job_i];task_i++){
-              for(task_j=0;task_j<TASK[job_i];task_j++){
-                syori_select[ant_i][job_i][task_i][task_j] = 0;
+            for(syori_i=0;syori_i<TASK[job_i];syori_i++){
+              for(task_i=0;task_i<TASK[job_i];task_i++){
+                syori_select[ant_i][job_i][syori_i][task_i] = 0;
               }
             }
 
@@ -267,9 +267,9 @@ public class aco_2016_upver {
 
             //制約条件の定義？()
             for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
-              for(task_i=F_TASK[job_i][layer_i];task_i<F_TASK[job_i][layer_i+1];task_i++){
-                for(task_j=F_TASK[job_i][layer_i];task_j<F_TASK[job_i][layer_i+1];task_j++){
-                  syori_select[ant_i][job_i][task_i][task_j] = 1;
+              for(syori_i=F_TASK[job_i][layer_i];syori_i<F_TASK[job_i][layer_i+1];syori_i++){
+                for(task_i=F_TASK[job_i][layer_i];task_i<F_TASK[job_i][layer_i+1];task_i++){
+                  syori_select[ant_i][job_i][syori_i][task_i] = 1;
                 }
               }
             }
@@ -319,7 +319,7 @@ public class aco_2016_upver {
               task_list[job_i][syori_i]           = task_i;
 
               for(task_j=syori_i;task_j<TASK[job_i];task_j++){
-                syori_select[ant_i][job_i][task_i][task_j] = 0;
+                syori_select[ant_i][job_i][task_j][task_i] = 0;
                 //要注意　配列の順
               }
               System.out.println("ここまで"+syori_i+"回目のループ*****************");
@@ -482,8 +482,7 @@ public class aco_2016_upver {
         for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
           for(job_i=0;job_i<JOB;job_i++){
             for(ant_i=0;ant_i<ANT;ant_i++){
-              haichi_pheromon[job_i][haichi_i]
-                *= (1.0 - haichi_job_select[ant_i][haichi_i][job_i] * EVAPO_HAICHI / ANT);
+              haichi_pheromon[job_i][haichi_i]*= (1.0 - haichi_job_select[ant_i][job_i][haichi_i] * EVAPO_HAICHI / ANT);
             }
           }
           for(job_i=0;job_i<JOB;job_i++){
@@ -498,8 +497,7 @@ public class aco_2016_upver {
         for(job_i=0;job_i<JOB;job_i++){
           for(task_i=0;task_i<TASK_MAX;task_i++){
             for(machine_i=0;machine_i<MACHINE;machine_i++){
-              machine_pheromon[job_i][machine_i][task_i]
-                *= (1.0 - EVAPO_MACHINE);
+              machine_pheromon[job_i][machine_i][task_i]*= (1.0 - EVAPO_MACHINE);
             }
           }
           for(task_i=0;task_i<TASK[job_i];task_i++){
