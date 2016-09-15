@@ -564,7 +564,6 @@ public class aco_2016_upver {
       }//おわり
 
       pw.println("haichi "+","+" Machine "+","+" Job "+","+" Task"+","+" Start Time "+","+" End Time");
-      //println("");を上にあったprint => printlnに変更した
       for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
         //best_haichi_XXX[SEDAI][haichi_i] SEDAI => あってるの？？？？ 
         int temp_Bjob     = best_haichi_job[SEDAI][haichi_i];
@@ -646,7 +645,6 @@ public class aco_2016_upver {
         result_pw.print(" , " + result_pave[run_i][sedai_i]);
       }
     }
-    result_pw.close();
-    
+    result_pw.close();   
   }
 }
