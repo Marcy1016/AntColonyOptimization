@@ -507,7 +507,6 @@ public class aco_2016_up{
 					haichijob         =haichi_job[haichi][ant];
 					haichimachine     =haichi_machine[haichi][ant];
 					layernumber       =layer_number[haichijob];
-					System.out.println("tsk="+haichitask+"job"+haichijob);
 					task_time[haichi] =(int)Math.ceil(task_volume[haichitask][haichijob]
 					/speed[haichimachine]);
 					
@@ -617,11 +616,11 @@ public class aco_2016_up{
 				pave[k]+=latest_endtime[ant];
 			}
 			pave[k]=pave[k]/ANT;
-			/*
+			
 			System.out.println("K " +k+" Generation best = "+pmin[k]);
 			System.out.println("K " +k+" Generation bad  = "+pmax[k]);
 			System.out.println("K " +k+" Generation ave  = "+pave[k]+"\n");
-			*/
+			
 			if(k==0){
 				pw.println("Machine= " + machine + "," +"Job= "+job+","+ "Task= "+task+ "," + "Ant= "+ant+ "," );
 				pw.print("K"+","+" Best" +","+" Bad"+" ,"+" Average");		
