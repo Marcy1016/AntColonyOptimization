@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.*;
 import java.io.*;
 
-public class aco_2016_upver {
+public class aco_2016_bever {
 
   // ファイル読み込みのための宣言、代入
     
@@ -152,7 +152,7 @@ public class aco_2016_upver {
     
 
     //外部出力のファイル名、拡張子の宣言・設定
-    String filename     = "result_upver("+args[0].replace(".txt", "_")
+    String filename     = "result_bever("+args[0].replace(".txt", "_")
                                          +args[1].replace(".txt", "_");
     String filename_ext = ".csv";
 
@@ -457,7 +457,7 @@ public class aco_2016_upver {
             for(task_i=0;task_i<TASK[job_i];task_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 syori_pheromon[job_i][syori_i][task_i] 
-                  *= (1.0 - syori_select[ant_i][job_i][syori_i][task_i] * EVAPO_SYORI / ANT);
+                  *= (1.0 - /*syori_select[ant_i][job_i][syori_i][task_i]*/1.0 * EVAPO_SYORI / ANT);
               }
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 if(task_i == task_select[ant_i][job_i][syori_i]){
@@ -472,7 +472,7 @@ public class aco_2016_upver {
           for(job_i=0;job_i<JOB;job_i++){
             for(ant_i=0;ant_i<ANT;ant_i++){
               haichi_pheromon[job_i][haichi_i]
-                *= (1.0 - haichi_job_select[ant_i][job_i][haichi_i] * EVAPO_HAICHI / ANT);
+                *= (1.0 - /*haichi_job_select[ant_i][job_i][haichi_i]*/1.0 * EVAPO_HAICHI / ANT);
             }
           }
           for(job_i=0;job_i<JOB;job_i++){
