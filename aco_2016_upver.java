@@ -578,6 +578,8 @@ public class aco_2016_upver {
         sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
         
         haichi_num_task[temp_Bjob]++;
+        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+        System.out.println("temp_laynum"+temp_laynum);
         if(haichi_num_task[temp_Bjob] == F_TASK[temp_Bjob][temp_laynum+1]){
           layer_endtime[temp_Bjob] = sigma[temp_Bjob];
           layer_number[temp_Bjob]++;
