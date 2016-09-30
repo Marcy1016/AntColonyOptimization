@@ -114,6 +114,12 @@ public class aco_2016_bever {
               LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
             System.out.println("LAYER="+Arrays.toString(LAYER));
+            
+            LAYER_MAX = 0;
+            for(job_i=0;job_i<JOB;job_i++){
+              LAYER_MAX = Math.max(LAYER_MAX,LAYER[job_i]);
+            }
+            System.out.println("LAYER_MAX="+LAYER_MAX);
             break;
           case "F_TASK":
             F_TASK        = new int[JOB][LAYER_MAX+1];
