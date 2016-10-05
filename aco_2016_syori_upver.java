@@ -39,12 +39,6 @@ public class aco_2016_syori_upver {
           case "SEDAI":
             SEDAI      = Integer.parseInt(br.readLine());//br1
             break;
-          case "LAYER_MAX":
-            LAYER_MAX = Integer.parseInt(br.readLine());//br1
-            break;
-          case "MACHINE":
-            MACHINE   = Integer.parseInt(br.readLine());//br1
-            break;
           case "INITIAL_PHEROMON":
             INITIAL_PHEROMON  = Double.parseDouble(br.readLine());
             break;
@@ -114,7 +108,7 @@ public class aco_2016_syori_upver {
               LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
             System.out.println("LAYER="+Arrays.toString(LAYER));
-            
+
             LAYER_MAX = 0;
             for(job_i=0;job_i<JOB;job_i++){
               LAYER_MAX = Math.max(LAYER_MAX,LAYER[job_i]);
@@ -131,6 +125,11 @@ public class aco_2016_syori_upver {
               }
             }
             System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+            break;
+          case "MACHINE":
+            MACHINE = Integer.parseInt(br1.readLine());
+            MACHINE_SIZE = new int[MACHINE];
+            SPEED = new int[MACHINE];
             break;
           case "MACHINE_SIZE":
             temp = br1.readLine().split(",",0);

@@ -39,12 +39,6 @@ public class aco_2016_upver {
           case "SEDAI":
             SEDAI      = Integer.parseInt(br.readLine());//br1
             break;
-          case "LAYER_MAX":
-            LAYER_MAX = Integer.parseInt(br.readLine());//br1
-            break;
-          case "MACHINE":
-            MACHINE   = Integer.parseInt(br.readLine());//br1
-            break;
           case "INITIAL_PHEROMON":
             INITIAL_PHEROMON  = Double.parseDouble(br.readLine());
             break;
@@ -66,8 +60,6 @@ public class aco_2016_upver {
         }
       }
 
-      MACHINE_SIZE  = new int[MACHINE];
-      SPEED         = new int[MACHINE];
 
       //初期化
       TASK_MAX = 0;
@@ -114,7 +106,7 @@ public class aco_2016_upver {
               LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
             System.out.println("LAYER="+Arrays.toString(LAYER));
-            
+
             LAYER_MAX = 0;
             for(job_i=0;job_i<JOB;job_i++){
               LAYER_MAX = Math.max(LAYER_MAX,LAYER[job_i]);
@@ -131,6 +123,11 @@ public class aco_2016_upver {
               }
             }
             System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+            break;
+          case "MACHINE":
+            MACHINE = Integer.parseInt(br1.readLine());
+            MACHINE_SIZE = new int[MACHINE];
+            SPEED = new int[MACHINE];
             break;
           case "MACHINE_SIZE":
             temp = br1.readLine().split(",",0);
@@ -313,6 +310,7 @@ public class aco_2016_upver {
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
+
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
@@ -380,6 +378,7 @@ public class aco_2016_upver {
                 count += machine_prob[job_i][machine_j][task_i];
                 if(count>rand)break;
               }
+
               machine_select[ant_i][job_i][task_i] = machine_j;
             }
           }
@@ -410,6 +409,7 @@ public class aco_2016_upver {
             int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
+            
             task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime    = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
             task_endtime[haichi_i]        = temp_maxTime + task_time[haichi_i];
@@ -584,9 +584,9 @@ public class aco_2016_upver {
         sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
         
         haichi_num_task[temp_Bjob]++;
-        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
-        System.out.println("temp_laynum"+temp_laynum);
-        System.out.println("temp_Bjob"+temp_Bjob);
+//        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+//        System.out.println("temp_laynum"+temp_laynum);
+//        System.out.println("temp_Bjob"+temp_Bjob);
         if(haichi_num_task[temp_Bjob] == F_TASK[temp_Bjob][temp_laynum+1]){
           layer_endtime[temp_Bjob] = sigma[temp_Bjob];
           layer_number[temp_Bjob]++;
