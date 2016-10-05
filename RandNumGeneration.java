@@ -77,9 +77,13 @@ public class RandNumGeneration{
         pw.println();
       }
 
+      //MACHINEの記述
+      pw.println("MACHINE");
+      pw.println(MACHINE);
+
       //MACHINE_SIZEの記述文
       pw.println("MACHINE_SIZE");
-      int MACHINE_SIZE =(rnd.nextInt(4)+6)*10;
+      int MACHINE_SIZE = 100;//問題の作成条件上必ず一つは100である必要がある
       pw.print(MACHINE_SIZE);
       for(int i=1;i<MACHINE;i++){
         MACHINE_SIZE =(rnd.nextInt(4)+6)*10;
@@ -95,7 +99,6 @@ public class RandNumGeneration{
         SPEED =(rnd.nextInt(4)+6)*10;
         pw.print(","+SPEED);
       }
-      pw.println();
 
       pw.close();
 
