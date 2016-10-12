@@ -157,7 +157,7 @@ public class aco_2016_haichi_upver {
     
 
     //外部出力のファイル名、拡張子の宣言・設定
-    String filename     = "result_bever("+args[0].replace(".txt", "_")
+    String filename     = "result_haichi_upver("+args[0].replace(".txt", "_")
                                          +args[1].replace(".txt", "_");
     String filename_ext = ".csv";
 
@@ -536,7 +536,7 @@ public class aco_2016_haichi_upver {
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
-          pw.println("Sedai " + "," + " Best " + "," + "," + " Bad " +"," + " Average ");
+          pw.println("Sedai " + "," + " Best " + "," +  " Bad " +"," + " Average ");
           //println("");を上にあったprint => printlnに変更した
           result_ant[run_i]     = ant_i;
           result_job[run_i]     = job_i;
