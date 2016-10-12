@@ -39,12 +39,6 @@ public class aco_2016_bever {
           case "SEDAI":
             SEDAI      = Integer.parseInt(br.readLine());//br1
             break;
-          case "LAYER_MAX":
-            LAYER_MAX = Integer.parseInt(br.readLine());//br1
-            break;
-          case "MACHINE":
-            MACHINE   = Integer.parseInt(br.readLine());//br1
-            break;
           case "INITIAL_PHEROMON":
             INITIAL_PHEROMON  = Double.parseDouble(br.readLine());
             break;
@@ -114,6 +108,12 @@ public class aco_2016_bever {
               LAYER[job_i] = Integer.parseInt(temp[job_i]);
             }
             System.out.println("LAYER="+Arrays.toString(LAYER));
+
+            LAYER_MAX = 0;
+            for(job_i=0;job_i<JOB;job_i++){
+              LAYER_MAX = Math.max(LAYER_MAX,LAYER[job_i]);
+            }
+            System.out.println("LAYER_MAX="+LAYER_MAX);
             break;
           case "F_TASK":
             F_TASK        = new int[JOB][LAYER_MAX+1];
@@ -125,6 +125,11 @@ public class aco_2016_bever {
               }
             }
             System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+            break;
+          case "MACHINE":
+            MACHINE = Integer.parseInt(br1.readLine());
+            MACHINE_SIZE = new int[MACHINE];
+            SPEED = new int[MACHINE];
             break;
           case "MACHINE_SIZE":
             temp = br1.readLine().split(",",0);
@@ -531,7 +536,7 @@ public class aco_2016_bever {
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
-          pw.println("Sedai " + "," + " Best " + "," + "," + " Bad " +"," + " Average ");
+          pw.println("Sedai " + "," + " Best " + "," + " Bad " +"," + " Average ");
           //println("");を上にあったprint => printlnに変更した
           result_ant[run_i]     = ant_i;
           result_job[run_i]     = job_i;
