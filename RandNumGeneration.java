@@ -86,7 +86,7 @@ public class RandNumGeneration{
       int MACHINE_SIZE = 100;//問題の作成条件上必ず一つは100である必要がある
       pw.print(MACHINE_SIZE);
       for(int i=1;i<MACHINE;i++){
-        MACHINE_SIZE =(rnd.nextInt(4)+6)*10;
+        MACHINE_SIZE =(rnd.nextInt(5)+6)*10;
         pw.print(","+MACHINE_SIZE);
       }
       pw.println();
