@@ -531,7 +531,7 @@ public class aco_2016_upver {
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
-          pw.println("Sedai " + "," + " Best " + "," + " Bad " +"," + " Average ");
+          pw.println("Sedai " + "," + " Best " + "," + "," + " Bad " +"," + " Average ");
           //println("");を上にあったprint => printlnに変更した
           result_ant[run_i]     = ant_i;
           result_job[run_i]     = job_i;
