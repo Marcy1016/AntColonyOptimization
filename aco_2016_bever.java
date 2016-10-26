@@ -232,6 +232,9 @@ public class aco_2016_bever {
 
       int task_time[]    = new int[TASK_MAX];
       int task_endtime[] = new int[TASK_MAX];
+
+      int sedai_best_i = 0;
+      double sedai_best_time = 10000.0;
       
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
@@ -312,6 +315,7 @@ public class aco_2016_bever {
                 count += syori_prob[job_i][syori_i][task_i];
                 if(count>rand) break;
               }
+
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
@@ -379,6 +383,7 @@ public class aco_2016_bever {
                 count += machine_prob[job_i][machine_j][task_i];
                 if(count>rand)break;
               }
+
               machine_select[ant_i][job_i][task_i] = machine_j;
             }
           }
@@ -409,6 +414,7 @@ public class aco_2016_bever {
             int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
+            
             task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime    = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
             task_endtime[haichi_i]        = temp_maxTime + task_time[haichi_i];
@@ -449,8 +455,8 @@ public class aco_2016_bever {
         
         if(best_min_time > min_latest_endtime){
           best_min_time = min_latest_endtime;
-          if(sedai_i > 100){
-            disp_pheromon[min_ant] *= 3;
+          if(sedai_i > 500){
+            disp_pheromon[min_ant] *= 10;
           }
         }
         //ここまで6/22追加分
@@ -462,7 +468,7 @@ public class aco_2016_bever {
             for(task_i=0;task_i<TASK[job_i];task_i++){
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 syori_pheromon[job_i][syori_i][task_i] 
-                  *= (1.0 - /*syori_select[ant_i][job_i][syori_i][task_i]*/1.0 * EVAPO_SYORI / ANT);
+                  *= (1.0 - /*syori_select[ant_i][job_i][syori_i][task_i] */ EVAPO_SYORI / ANT);
               }
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 if(task_i == task_select[ant_i][job_i][syori_i]){
@@ -477,7 +483,7 @@ public class aco_2016_bever {
           for(job_i=0;job_i<JOB;job_i++){
             for(ant_i=0;ant_i<ANT;ant_i++){
               haichi_pheromon[job_i][haichi_i]
-                *= (1.0 - /*haichi_job_select[ant_i][job_i][haichi_i]*/1.0 * EVAPO_HAICHI / ANT);
+                *= (1.0 - /*haichi_job_select[ant_i][job_i][haichi_i] */ EVAPO_HAICHI / ANT);
             }
           }
           for(job_i=0;job_i<JOB;job_i++){
@@ -528,11 +534,19 @@ public class aco_2016_bever {
           }
           pave[sedai_i] += latest_endtime[ant_i];
         }
+
+        //ベストタイムを残すためのif
+        if(sedai_best_time > pmin[sedai_i]){
+          sedai_best_time = pmin[sedai_i];
+          sedai_best_i = sedai_i;
+        }
+
         pave[sedai_i] = pave[sedai_i] / ANT;
 
         System.out.println("SEDAI " + sedai_i + " Generation best = " + pmin[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation bad  = " + pmax[sedai_i]);
-        System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i] + "\n");
+        System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i]);
+        System.out.println("SEDAI best_i = " + sedai_best_i + " SEDAI besttime = " + sedai_best_time + "\n");
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
@@ -583,6 +597,9 @@ public class aco_2016_bever {
         sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
         
         haichi_num_task[temp_Bjob]++;
+//        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
+//        System.out.println("temp_laynum"+temp_laynum);
+//        System.out.println("temp_Bjob"+temp_Bjob);
         if(haichi_num_task[temp_Bjob] == F_TASK[temp_Bjob][temp_laynum+1]){
           layer_endtime[temp_Bjob] = sigma[temp_Bjob];
           layer_number[temp_Bjob]++;

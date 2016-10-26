@@ -230,6 +230,9 @@ public class aco_2016_upver {
 
       int task_time[]    = new int[TASK_MAX];
       int task_endtime[] = new int[TASK_MAX];
+
+      int sedai_best_i = 0;
+      double sedai_best_time = 10000.0;
       
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
@@ -450,8 +453,8 @@ public class aco_2016_upver {
         
         if(best_min_time > min_latest_endtime){
           best_min_time = min_latest_endtime;
-          if(sedai_i > 100){
-            disp_pheromon[min_ant] *= 3;
+          if(sedai_i > 500){
+            disp_pheromon[min_ant] *= 10;
           }
         }
         //ここまで6/22追加分
@@ -529,11 +532,19 @@ public class aco_2016_upver {
           }
           pave[sedai_i] += latest_endtime[ant_i];
         }
+
+        //ベストタイムを残すためのif
+        if(sedai_best_time > pmin[sedai_i]){
+          sedai_best_time = pmin[sedai_i];
+          sedai_best_i = sedai_i;
+        }
+
         pave[sedai_i] = pave[sedai_i] / ANT;
 
         System.out.println("SEDAI " + sedai_i + " Generation best = " + pmin[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation bad  = " + pmax[sedai_i]);
-        System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i] + "\n");
+        System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i]);
+        System.out.println("SEDAI best_i = " + sedai_best_i + " SEDAI besttime = " + sedai_best_time + "\n");
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
