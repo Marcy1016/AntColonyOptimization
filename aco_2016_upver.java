@@ -234,7 +234,9 @@ public class aco_2016_upver {
       int sedai_best_i = 0;
       double sedai_best_time = 10000.0;
 
-      int min_ant = 0;
+      int best_task_select[][] = new int[JOB][TASK_MAX];
+      int best_job_select[] = new int[TASK_MAX];
+      int best_machine_select[][] = new int[JOB][TASK_MAX];
       
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
@@ -260,9 +262,6 @@ public class aco_2016_upver {
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
-
-          if(sedai_i != 0 && ant_i == min_ant)continue;
-          
           //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
@@ -298,9 +297,6 @@ public class aco_2016_upver {
 
         //処理、配置、マシンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
-
-          if(sedai_i != 0 && ant_i == min_ant)continue;
-
           //処理順の決定
           for(job_i=0;job_i<JOB;job_i++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
@@ -323,6 +319,11 @@ public class aco_2016_upver {
 
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
+
+              if(sedai_i != 0 && ant_i == 0){
+                task_select[ant_i][job_i][syori_i]  = best_task_select[job_i][syori_i];
+                task_list[job_i][syori_i]           = best_task_select[job_i][syori_i];
+              }
 
               for(task_j=syori_i;task_j<TASK[job_i];task_j++){
                 syori_select[ant_i][job_i][task_j][task_i] = 0;
@@ -357,6 +358,10 @@ public class aco_2016_upver {
 
             job_select[ant_i][haichi_i] = job_i;
 
+            if(sedai_i != 0 && ant_i == 0){
+              job_select[ant_i][haichi_i] = best_job_select[haichi_i];
+            }
+
             int temp = haichi_num_task[job_i];
             haichi_task[ant_i][haichi_i] = task_list[job_i][temp];
             haichi_job[ant_i][haichi_i] = job_i;
@@ -390,6 +395,10 @@ public class aco_2016_upver {
               }
 
               machine_select[ant_i][job_i][task_i] = machine_j;
+
+              if(sedai_i != 0 && ant_i == 0){
+                machine_select[ant_i][job_i][task_i] = best_machine_select[job_i][task_i];                
+              }
             }
           }
 
@@ -419,6 +428,13 @@ public class aco_2016_upver {
             int temp_job     = haichi_job[ant_i][haichi_i];
             int temp_machine = haichi_machine[ant_i][haichi_i];
             int temp_laynum  = layer_number[temp_job];
+
+            if(sedai_i != 0 && ant_i == 0){
+              temp_task = best_haichi_task[sedai_i-1][haichi_i];
+              temp_job  = best_haichi_job[sedai_i-1][haichi_i];
+              temp_machine = best_haichi_machine[sedai_i-1][haichi_i];
+              temp_laynum = layer_number[temp_job];
+            }
             
             task_time[haichi_i] = (int)Math.ceil(TASK_VOLUME[temp_job][temp_task] / SPEED[temp_machine]);
             int temp_maxTime    = Math.max(layer_endtime[temp_job],machine_endtime[temp_machine]);
@@ -450,11 +466,12 @@ public class aco_2016_upver {
 
         //ここから10数行は6/22追加分である
         double min_latest_endtime = layer_endtime[0];
-        min_ant = 0;
+        int min_ant = 0;
         for(ant_i=1;ant_i<ANT;ant_i++){
           if(min_latest_endtime > latest_endtime[ant_i]){
             min_latest_endtime = latest_endtime[ant_i];
             min_ant            = ant_i;
+
           }
         }
         /*
@@ -465,8 +482,17 @@ public class aco_2016_upver {
           }
         }
         *///11/14にコメントアウト
-
         //ここまで6/22追加分
+
+        //11/14最良解に毎回ありに行かせる
+        for(job_i=0;job_i<JOB;job_i++){        
+          best_job_select[job_i] = job_select[min_ant][job_i];
+          for(task_i=0;task_i<TASK[job_i];task_i++){
+            best_task_select[job_i][task_i] = task_select[min_ant][job_i][task_i];
+            best_machine_select[job_i][task_i] = machine_select[min_ant][job_i][task_i];
+          }
+        }
+
         
         //フェロモン更新
         //処理ノードの更新
@@ -604,9 +630,6 @@ public class aco_2016_upver {
         sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
         
         haichi_num_task[temp_Bjob]++;
-//        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
-//        System.out.println("temp_laynum"+temp_laynum);
-//        System.out.println("temp_Bjob"+temp_Bjob);
         if(haichi_num_task[temp_Bjob] == F_TASK[temp_Bjob][temp_laynum+1]){
           layer_endtime[temp_Bjob] = sigma[temp_Bjob];
           layer_number[temp_Bjob]++;

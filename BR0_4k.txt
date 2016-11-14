@@ -1,5 +1,5 @@
 RUN
-10
+1
 ANT
 50
 SEDAI
