@@ -233,6 +233,8 @@ public class aco_2016_upver {
 
       int sedai_best_i = 0;
       double sedai_best_time = 10000.0;
+
+      int min_ant = 0;
       
       //外部出力ファイルオープン
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));
@@ -258,6 +260,9 @@ public class aco_2016_upver {
 
         //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
         for(ant_i=0;ant_i<ANT;ant_i++){
+
+          if(sedai_i != 0 && ant_i == min_ant)continue;
+          
           //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
@@ -293,6 +298,8 @@ public class aco_2016_upver {
 
         //処理、配置、マシンの決定
         for(ant_i=0;ant_i<ANT;ant_i++){
+
+          if(sedai_i != 0 && ant_i == min_ant)continue;
 
           //処理順の決定
           for(job_i=0;job_i<JOB;job_i++){
@@ -443,20 +450,22 @@ public class aco_2016_upver {
 
         //ここから10数行は6/22追加分である
         double min_latest_endtime = layer_endtime[0];
-        int min_ant = 0;
+        min_ant = 0;
         for(ant_i=1;ant_i<ANT;ant_i++){
           if(min_latest_endtime > latest_endtime[ant_i]){
             min_latest_endtime = latest_endtime[ant_i];
             min_ant            = ant_i;
           }
         }
-        
+        /*
         if(best_min_time > min_latest_endtime){
           best_min_time = min_latest_endtime;
           if(sedai_i > 500){
             disp_pheromon[min_ant] *= 10;
           }
         }
+        *///11/14にコメントアウト
+
         //ここまで6/22追加分
         
         //フェロモン更新
