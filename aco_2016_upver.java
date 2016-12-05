@@ -540,11 +540,12 @@ public class aco_2016_upver {
         }
 
         pave[sedai_i] = pave[sedai_i] / ANT;
-
+/*
         System.out.println("SEDAI " + sedai_i + " Generation best = " + pmin[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation bad  = " + pmax[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i]);
-        System.out.println("SEDAI best_i = " + sedai_best_i + " SEDAI besttime = " + sedai_best_time + "\n");
+*/
+        System.out.println("RUN= " + run_i + " SEDAI= " + sedai_i + " SEDAI best_i = " + sedai_best_i + " SEDAI besttime = " + sedai_best_time + "\n");
 
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
