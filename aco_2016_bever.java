@@ -157,7 +157,7 @@ public class aco_2016_bever {
     
 
     //外部出力のファイル名、拡張子の宣言・設定
-    String filename     = "result_bever("+args[0].replace(".txt", "_")
+    String filename     = "bever("+args[0].replace(".txt", "_")
                                          +args[1].replace(".txt", "_");
     String filename_ext = ".csv";
 
