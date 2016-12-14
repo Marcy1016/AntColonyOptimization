@@ -166,7 +166,6 @@ public class aco_2016_upver {
     double haichi_pheromon[][]  = new double[JOB][TASK_MAX];
     double machine_pheromon[][][] = new double[JOB][MACHINE][TASK_MAX];
 
-    //どうしてdouble[JOB][TASK_MAX][TASK_MAX]なのだろう
     double syori_prob[][][]   = new double[JOB][TASK_MAX][TASK_MAX];
     double haichi_prob[][]  = new double[JOB][TASK_MAX];
     double machine_prob[][][] = new double[JOB][MACHINE][TASK_MAX];
@@ -184,7 +183,7 @@ public class aco_2016_upver {
     int best_haichi_machine[][] = new int[SEDAI+1][TASK_MAX];
 
     //タスク総数の宣言・代入
-    //ここはTASK_MAXではないのか 
+    //total_taskは以下三回のみ使用、TASK_MAXに変更可能か 
     int total_task = 0;
     for(job_i=0;job_i<JOB;job_i++){
       total_task += TASK[job_i];
@@ -221,7 +220,6 @@ public class aco_2016_upver {
         }
       }
 
-      double best_min_time = SEDAI;//ベスト戦略のための変数
       int layer_endtime[]    = new int[JOB];
       int layer_number[]     = new int[JOB];
       int sigma[]            = new int[JOB];
@@ -231,7 +229,9 @@ public class aco_2016_upver {
       int task_time[]    = new int[TASK_MAX];
       int task_endtime[] = new int[TASK_MAX];
 
+      //ベスト戦略のための変数
       int sedai_best_i = 0;
+      double best_min_time = SEDAI;
       double sedai_best_time = 10000.0;
       
       //外部出力ファイルオープン
@@ -239,6 +239,7 @@ public class aco_2016_upver {
       for(sedai_i=0;sedai_i<SEDAI;sedai_i++){
 
         int ant_i,task_j;
+        
         int syori_select[][][][]   = new int[ANT][JOB][TASK_MAX][TASK_MAX];
         int haichi_select[][]      = new int[ANT][JOB];
         int machine_select[][][]   = new int[ANT][JOB][TASK_MAX];//selsect_machine -> machine_select
@@ -256,7 +257,7 @@ public class aco_2016_upver {
 
   
 
-        //選択行列の初期化？？？？ 処理関係の初期化という認識で合ってるのか
+        //選択行列の初期化
         for(ant_i=0;ant_i<ANT;ant_i++){
           //処理セレクト配列の初期化
           for(job_i=0;job_i<JOB;job_i++){
@@ -271,7 +272,7 @@ public class aco_2016_upver {
             F_TASK[job_i][0] = 0;
             F_TASK[job_i][layerjob] = TASK[job_i];
 
-            //制約条件の定義？()
+            //制約条件の定義？
             for(layer_i=0;layer_i<LAYER[job_i];layer_i++){
               for(syori_i=F_TASK[job_i][layer_i];syori_i<F_TASK[job_i][layer_i+1];syori_i++){
                 for(task_i=F_TASK[job_i][layer_i];task_i<F_TASK[job_i][layer_i+1];task_i++){
@@ -281,6 +282,7 @@ public class aco_2016_upver {
             }
           }
 
+          //配置行列の初期化
           for(job_i=0;job_i<JOB;job_i++){
             for(haichi_i=0;haichi_i<TASK_MAX;haichi_i++){
               haichi_job_select[ant_i][job_i][haichi_i] = 1;
@@ -299,27 +301,25 @@ public class aco_2016_upver {
             for(syori_i=0;syori_i<TASK[job_i];syori_i++){
               double sum = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
-                //syori_pheromon=100.0  syori_select=0 or 1
                 sum += syori_pheromon[job_i][syori_i][task_i] * syori_select[ant_i][job_i][syori_i][task_i];
               }
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 syori_prob[job_i][syori_i][task_i] = syori_pheromon[job_i][syori_i][task_i]
                                                    * syori_select[ant_i][job_i][syori_i][task_i] / sum;
               }
-
+              //ルーレット選択用変数の宣言及び初期化
               double rand   = Math.random();
               double count  = 0.0;
               for(task_i=0;task_i<TASK[job_i];task_i++){
                 count += syori_prob[job_i][syori_i][task_i];
-                if(count>rand) break;
+                if(count>rand) break;//ここでtask_iのループを強制的に終了させ、そのjob_iを下で使う
               }
 
               task_select[ant_i][job_i][syori_i]  = task_i;
               task_list[job_i][syori_i]           = task_i;
 
               for(task_j=syori_i;task_j<TASK[job_i];task_j++){
-                syori_select[ant_i][job_i][task_j][task_i] = 0;
-                //要注意　配列の順
+                syori_select[ant_i][job_i][task_j][task_i] = 0;//要注意　配列の順
               }
             }
           }
@@ -345,18 +345,19 @@ public class aco_2016_upver {
             double count = 0.0;
             for(job_i=0;job_i<JOB;job_i++){
               count += haichi_prob[job_i][haichi_i];
-              if(count>rand)break;//ここでjob_iのループを強制的に終了させ、そのjob_iを下で使う 
+              if(count>rand)break;
             }
 
             job_select[ant_i][haichi_i] = job_i;
 
+            //容量制約の記述
             int temp = haichi_num_task[job_i];
             haichi_task[ant_i][haichi_i] = task_list[job_i][temp];
             haichi_job[ant_i][haichi_i] = job_i;
             haichi_num_task[job_i]++;
             if(haichi_num_task[job_i] >= TASK[job_i]){
               for(int i=haichi_i;i<TASK_MAX;i++){
-                haichi_job_select[ant_i][job_i][i] = 0;//iの場所はここでいいのか
+                haichi_job_select[ant_i][job_i][i] = 0;
               }
               haichi_select[ant_i][job_i] = 0;
             }
@@ -441,7 +442,7 @@ public class aco_2016_upver {
           //ガントチャート終了  
         }//(antループ終了)
 
-        //ここから10数行は6/22追加分である
+        //ここから6/22追加分
         double min_latest_endtime = layer_endtime[0];
         int min_ant = 0;
         for(ant_i=1;ant_i<ANT;ant_i++){
@@ -467,6 +468,7 @@ public class aco_2016_upver {
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 syori_pheromon[job_i][syori_i][task_i] 
                   *= (1.0 - syori_select[ant_i][job_i][syori_i][task_i] * EVAPO_SYORI / ANT);
+                            //ここが変更箇所
               }
               for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
                 if(task_i == task_select[ant_i][job_i][syori_i]){
@@ -482,6 +484,7 @@ public class aco_2016_upver {
             for(ant_i=0;ant_i<ANT;ant_i++){
               haichi_pheromon[job_i][haichi_i]
                 *= (1.0 - haichi_job_select[ant_i][job_i][haichi_i] * EVAPO_HAICHI / ANT);
+                          //ここが変更箇所
             }
           }
           for(job_i=0;job_i<JOB;job_i++){
@@ -541,23 +544,23 @@ public class aco_2016_upver {
 
         pave[sedai_i] = pave[sedai_i] / ANT;
 /*
+        出力時のターミナルで確認できるよう、print出力記述
         System.out.println("SEDAI " + sedai_i + " Generation best = " + pmin[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation bad  = " + pmax[sedai_i]);
         System.out.println("SEDAI " + sedai_i + " Generation ave  = " + pave[sedai_i]);
 */
         System.out.println("RUN= " + run_i + " SEDAI= " + sedai_i + " SEDAI best_i = " + sedai_best_i + " SEDAI besttime = " + sedai_best_time + "\n");
 
+        //初期ループ時の記述
         if(sedai_i == 0){
           pw.println("Machine = " + machine_i + "," + "Job = " + job_i + "," + "Task = " + task_i + "," + "Ant = " + ant_i + ",");
           pw.println("Sedai " + "," + " Best " + "," + " Bad " +"," + " Average ");
-          //println("");を上にあったprint => printlnに変更した
           result_ant[run_i]     = ant_i;
           result_job[run_i]     = job_i;
           result_task[run_i]    = task_i;
           result_machine[run_i] = machine_i;
         }
         pw.println(sedai_i + " , " + pmin[sedai_i] + " , " + pmax[sedai_i] + " , " + pave[sedai_i] + " , ");
-        //println("");を上にあったprint => printlnに変更した
         result_pmin[run_i][sedai_i] = pmin[sedai_i];
         result_pmax[run_i][sedai_i] = pmax[sedai_i];
         result_pave[run_i][sedai_i] = pave[sedai_i];
@@ -596,9 +599,7 @@ public class aco_2016_upver {
         sigma[temp_Bjob]       = Math.max(sigma[temp_Bjob],task_endtime[haichi_i]);
         
         haichi_num_task[temp_Bjob]++;
-//        System.out.println("F_TASK="+Arrays.deepToString(F_TASK));
-//        System.out.println("temp_laynum"+temp_laynum);
-//        System.out.println("temp_Bjob"+temp_Bjob);
+
         if(haichi_num_task[temp_Bjob] == F_TASK[temp_Bjob][temp_laynum+1]){
           layer_endtime[temp_Bjob] = sigma[temp_Bjob];
           layer_number[temp_Bjob]++;
@@ -612,8 +613,8 @@ public class aco_2016_upver {
       pw.close();
     }//RUN END
 
-    //result外部出力部
-    PrintWriter result_pw = new PrintWriter(new BufferedWriter(new FileWriter("other" + filename + filename_ext)));
+    //RUNが2以上での外部出力部
+    PrintWriter result_pw = new PrintWriter(new BufferedWriter(new FileWriter("total_" + filename + filename_ext)));
 
     result_pw.println("RUN, MACHINE, JOB, TASK, ANT");
     for(run_i=0;run_i<RUN;run_i++){
