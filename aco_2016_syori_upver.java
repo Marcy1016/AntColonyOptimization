@@ -156,7 +156,7 @@ public class aco_2016_syori_upver {
 
     //外部出力のファイル名、拡張子の宣言・設定
     String filename     = "syori("+args[0].replace(".txt", "_")
-                                         +args[1].replace(".txt", "_");
+                                         +args[1].replace(".txt", ")");
     String filename_ext = ".csv";
 
 
