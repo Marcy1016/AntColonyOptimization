@@ -442,7 +442,7 @@ public class aco_2016_upver {
           //ガントチャート終了  
         }//(antループ終了)
 
-        //ここから6/22追加分
+        //ベストタイムのアリを変数に代入
         double min_latest_endtime = layer_endtime[0];
         int min_ant = 0;
         for(ant_i=1;ant_i<ANT;ant_i++){
@@ -452,25 +452,26 @@ public class aco_2016_upver {
           }
         }
         
+		//SEDAIが500未満のときにフェロモン量を10倍に
         if(best_min_time > min_latest_endtime){
           best_min_time = min_latest_endtime;
           if(sedai_i > 500){
             disp_pheromon[min_ant] *= 10;
           }
         }
-        //ここまで6/22追加分
+        
         
         //フェロモン更新
         //処理ノードの更新
         for(job_i=0;job_i<JOB;job_i++){
           for(syori_i=0;syori_i<TASK[job_i];syori_i++){
             for(task_i=0;task_i<TASK[job_i];task_i++){
-              for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
+              for(ant_i=0;ant_i<ANT;ant_i++){
                 syori_pheromon[job_i][syori_i][task_i] 
                   *= (1.0 - syori_select[ant_i][job_i][syori_i][task_i] * EVAPO_SYORI / ANT);
                             //ここが変更箇所
               }
-              for(ant_i=0;ant_i<ANT;ant_i++){//antが内側にあるのは意味があるのだろうか
+              for(ant_i=0;ant_i<ANT;ant_i++){
                 if(task_i == task_select[ant_i][job_i][syori_i]){
                   syori_pheromon[job_i][syori_i][task_i] += disp_pheromon[ant_i];
                 }
@@ -572,7 +573,7 @@ public class aco_2016_upver {
         }
       }//SEDAILOOP
 
-      //最後のガントチャート？？
+      //最後のガントチャート
       //初期化はじめ
       for(job_i=0;job_i<JOB;job_i++){
         layer_endtime[job_i]    = -1;
