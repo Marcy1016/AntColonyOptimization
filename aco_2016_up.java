@@ -1,10 +1,9 @@
 import java.util.*;
 import java.io.*;
 import java.awt.*;
-import java.util.regex.*;
+//import java.util.regex.*;
 
-public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
-{
+public class aco_2016_up{
 		// Grid
 	static int RUN;
 	static int run;
@@ -224,14 +223,18 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 	result_task    = new int [RUN];
 	result_ant     = new int [RUN];
 	
-	TASK         =new int[JOB];
-	task_size    =new int[TASK_MAX][JOB];
-	task_volume  =new int[TASK_MAX][JOB];
+	TASK 		 = new int[JOB];
+	task_size    = new int[TASK_MAX][JOB];
+	task_volume  = new int[TASK_MAX][JOB];
 	
-	LAYER        =new int[JOB];
-	F_TASK       =new int[LAYER_MAX+1][JOB];	
-	machine_size =new double[MACHINE];
-	speed        =new int[MACHINE];
+	LAYER        = new int[JOB];
+	F_TASK       = new int[LAYER_MAX+1][JOB];	
+	machine_size = new double[MACHINE];
+	speed        = new int[MACHINE];
+
+
+	//TASK_MAXã®åˆæœŸåŒ–
+	TASK_MAX = 0;
 
 	while ((str = br2.readLine()) != null)
 	{
@@ -348,15 +351,15 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 			}
 		}//end
 		
-		double best_min_time = K;// 6/22’Ç‰Á 534s@ƒxƒXƒgí—ª‚Ì‚½‚ß‚Ì•Ï”
+		double best_min_time = K; // 6.22
 
 	// file open
 	PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(filename+filename_ext)));	
 		for(k=0;k<=K;k++){
 		//Initialization of the selection matrix
 			
-			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29’Ç‰Á@”z’uƒm[ƒh‚Ì‚½‚ß‚É•K—v
-			//haichi_job_select[JOB][U_ub][ANT]‚Ì‰Šú’l‘ã“ü
+			int haichi_job_select[][][] = new int[JOB][U_ub][ANT]; //6/29
+			//haichi_job_select[JOB][U_ub][ANT]
 			for(ant=0;ant<ANT;ant++){
 				for(job=0;job<JOB;job++){
 					for(haichi=0;haichi<U_ub;haichi++){
@@ -387,6 +390,9 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 				}//end
 			}//end
 			
+
+			
+
 			for(ant=0;ant<ANT;ant++){		
 			//Processing order node
 				for(job=0;job<JOB;job++){
@@ -505,7 +511,7 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 					/speed[haichimachine]);
 					
 					temp                           =Math.max(layer_endtime[haichijob],machine_endtime[haichimachine]);
-					task_starttime[haichi]         =temp+1;
+					task_starttime[haichi]         =temp+1;//ã“ã“ã§ä½¿ã†æ„å‘³ï¼Ÿ
 					task_endtime[haichi]           =temp+task_time[haichi];
 					machine_endtime[haichimachine] =task_endtime[haichi];
 					
@@ -525,13 +531,13 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 				}
 				disp_pheromon[ant]=parameter_a-parameter_b*latest_endtime[ant];
 				if(disp_pheromon[ant]<=1.0){
-				disp_pheromon[ant]=1.0;  // 6/22   508,509s@•ÏX“_0.0 => 1.0
+				disp_pheromon[ant]=1.0;  // 6/22
 				}//gantt charts is end
 			}//ant loop is finish
 			
 			
 
-			//6/22 ƒGƒŠ[ƒgí—ª@1”Ô‚ÌƒAƒŠ‚ÉƒtƒFƒƒ‚ƒ“‚ğ2”{‚Ü‚©‚¹‚é
+			//6/22
 			double min_latest_endtime = latest_endtime[0];
 			int min_ant = 0;
 			for(ant=1;ant<ANT;ant++){
@@ -554,7 +560,7 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 					for(task=0;task<TASK[job];task++){
 						for(ant=0;ant<ANT;ant++){	//from here start the evaporation of node accumulation pheromone
 							syori_pheromon[task][syori][job]
-								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]* ‚Ì•”•ª‚ª•ÏX‚ ‚è‚Ìó‘Ô
+								*=(1.0-syori_select[task][syori][job][ant]*evapo_syori/ANT);//syori_select[task][syori][job][ant]
 						}//end the evaporation of node
 						for(ant=0;ant<ANT;ant++){//from here Pheromone spray to the node
 							if(task==select_task[syori][job][ant]){
@@ -614,7 +620,7 @@ public class aco_2016_up//ƒtƒFƒƒ‚ƒ“ö”­’²®‚ ‚è
 			System.out.println("K " +k+" Generation best = "+pmin[k]);
 			System.out.println("K " +k+" Generation bad  = "+pmax[k]);
 			System.out.println("K " +k+" Generation ave  = "+pave[k]+"\n");
-		
+			
 			if(k==0){
 				pw.println("Machine= " + machine + "," +"Job= "+job+","+ "Task= "+task+ "," + "Ant= "+ant+ "," );
 				pw.print("K"+","+" Best" +","+" Bad"+" ,"+" Average");		
